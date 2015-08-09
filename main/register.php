@@ -1,0 +1,137 @@
+		<div class="page-header">
+			<h1>Înregistrare</h1>
+		</div>
+<?php
+
+if(isset($_SESSION['id'])) {
+?>
+		<div class="alert alert-warning" role="alert">
+			Ca să-ți creezi un cont nou trebuie să te <a href="index.php?page=logout">deconectezi</a>.
+		</div>
+<?php
+} else {
+
+?>
+<?php
+//Verificare daca inregistrarea e dezactivata.
+$rg = mysqli_query($sqlHp, "SELECT * FROM ".SQL_HP_DB.".settings WHERE id=8");
+$reg = mysqli_fetch_assoc($rg);
+if ($reg['value'] == 'nu') {
+echo '<div class="alert alert-danger" role="alert">
+			Înregistrarea este momentan <strong>dezactivată</strong>!
+		</div>'; }
+
+else {
+if(!isset($_POST['register'])) {
+	?>
+		<div class="alert alert-info" role="alert">
+			<strong>ATENȚIE!</strong> Toate câmpurile sunt obligatorii.<br> <strong>ATENȚIE!</strong>
+			Adresa de e-mail trebuie să fie validă!
+		</div>
+		<div class="alert alert-danger" role="alert">
+			<strong>ATENȚIE!</strong> Prin înregistrarea pe acest server, ești de
+			acord cu <a href="index.php?page=rules">regulamentul intern</a>.
+		</div>
+<?php } ?>
+
+<?php
+if(isset($_POST['register']) && isset($_POST['agreed'])) {
+	$actions = array(
+			
+			'username' => sanitize(stripInput($_POST['username'])),
+			'password' => sanitize(stripInput($_POST['password'])),
+			'usermail' => sanitize(stripInput($_POST['usermail'])),
+			'realname' => sanitize(stripInput($_POST['realname'])),
+			'socialid' => sanitize(stripInput($_POST['socialid'])),
+			'__userip' => $_SERVER['REMOTE_ADDR']
+	);
+	$errors = array();
+	
+	$check_login = "SELECT * FROM account.account WHERE login = '{$actions['username']}'";
+	$check_login = $sqlServ->query($check_login);
+	$rows_login = $check_login->num_rows;
+
+	$check_email = "SELECT * FROM account.account WHERE email = '{$actions['usermail']}'";
+	$check_email = $sqlServ->query($check_email);
+	$rows_email = $check_email->num_rows;
+	if($rows_login >= 1) {
+		echo '<div class="alert alert-danger" role="alert">';
+		echo '	Acest cont este deja înregistrat!';
+		echo '</div>';
+	} else if($rows_email >= 1) {
+		echo '<div class="alert alert-danger" role="alert">';
+		echo '	Acest e-mail este folosit deja de un alt cont!';
+		echo '</div>';
+	} else {
+		if(filter_var($actions['usermail'], FILTER_VALIDATE_EMAIL)) {
+			if($_POST['password'] == $_POST['rpassword']) {
+				$query = "INSERT INTO account.account (login, password, real_name, social_id, email, user_ip, create_time, is_user)
+						VALUES (?, PASSWORD(?), ?, ?, ?, ?, NOW(), 1)";
+				$sanitize = array(
+						':user' => $actions['username'],
+						':pass' => $actions['password'],
+						':mail' => $actions['usermail'],
+						':name' => $actions['realname'],
+						':soid' => $actions['socialid'],
+						':usip' => $actions['__userip']
+				);
+				$insert = $sqlServ->prepare($query);
+				$insert->bind_param('ssssss', $sanitize[':user'], $sanitize[':pass'], $sanitize[':name'], $sanitize[':soid'], $sanitize[':mail'], $sanitize[':usip']);
+				$insert->execute();
+				echo '<div class="alert alert-success" role="alert">';
+				echo '	Contul <strong>' . $actions['username'] . '</strong> a fost înregistrat cu succes!';
+				echo '</div>';
+			} else {
+				echo '<div class="alert alert-danger" role="alert">';
+				echo '	Parolele nu corespund!';
+				echo '</div>';
+			}
+		} else {
+			echo '<div class="alert alert-success" role="alert">';
+			echo '	Adresa de e-mail este invalidă!';
+			echo '</div>';
+		}
+	}
+}
+?>
+	<div class="well">
+		<div class="table-responsive">
+			<form action="<?= $_SERVER['PHP_SELF'] ?>?page=register" method="post">
+				<table class="table table-striped">
+					<tbody>
+						<tr>
+							<td>Nume de utilizator:</td>
+							<td><input type="text" class="form-control" name="username" placeholder="Numele dorit..." required></td>
+						</tr>
+						<tr>
+							<td>Parolă:</td>
+							<td><input type="password" class="form-control" name="password" placeholder="Parolă" required></td>
+						</tr>
+						<tr>
+							<td>Repetă parola:</td>
+							<td><input type="password" class="form-control" name="rpassword" placeholder="Repetare parolă" required></td>
+						</tr>
+						<tr>
+							<td>Adresă de e-mail:</td>
+							<td><input type="text" class="form-control" name="usermail" placeholder="exemplu@domeniu.ro" required></td>
+						</tr>
+						<tr>
+							<td>Cod ștergere caracter:</td>
+							<td><input type="username" AUTOCOMPLETE="off" maxlength="7" class="form-control" name="socialid" placeholder="Ștergere caracter în joc" required></td>
+						</tr>
+						<tr>
+							<td>Nume real:</td>
+							<td><input type="username" class="form-control" name="realname" placeholder="Numele tău" required></td>
+						</tr>
+						<tr>
+							<td>Sunt de acord cu <a href="index.php?page=rules">regulamentul
+									jocului</a> <input type="checkbox" name="agreed"></td>
+							</td>
+							<td><input type="submit" class="btn btn-s btn-success" name="register" value="Înregistrare"></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+<?php }} ?>
