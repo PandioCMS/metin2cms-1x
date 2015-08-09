@@ -1,4 +1,4 @@
- <div class="page-header">
+﻿ <div class="page-header">
 <?php if(isset($_SESSION['user_admin']) && checkInt($_SESSION['user_admin']) && $_SESSION['user_admin']>=0) { ?>
  <h1><?php include("./user/name_sv.php"); ?> - Resetare caractere</h1>
       </div>
@@ -22,12 +22,12 @@
         $toGoSek = ($toGoTime)%60;
         if(($difSpielzeit/60)>=5) {
         		
-		if($getChar->empire=='1') { $mapindex = "1"; $x = "4742"; $y = "9544";} //regat rosu
-		elseif($getChar->empire=='2') { $mapindex = "21"; $x = "632"; $y = "1661";} //regat galben
-		elseif($getChar->empire=='3') { $mapindex = "41"; $x = "9601"; $y = "2687";} //regat albastru
+		if($getChar->empire=='1') { $mapindex = "0"; $x = "459770"; $y = "953980";} //regat rosu
+		elseif($getChar->empire=='2') { $mapindex = "21"; $x = "52043"; $y = "166304";} //regat galben
+		elseif($getChar->empire=='3') { $mapindex = "41"; $x = "957291"; $y = "255221";} //regat albastru
 
 		
-          $sqlUpdate = "UPDATE player.player SET map_index='".$mapindex."', x='".$x."', y='".$y."', exit_x='".$x."', exit_y='".$y."', exit_map_index='".$mapindex."', horse_riding='0' WHERE id='".$_GET['char']."' LIMIT 1";
+          $sqlUpdate = "UPDATE player.player SET map_index='".$mapindex."', x='".$x."', y='".$y."', exit_x='0', exit_y='0', exit_map_index='".$mapindex."', horse_riding='0' WHERE id='".$_GET['char']."' LIMIT 1";
           $updatePos = mysqli_query($sqlServ, $sqlUpdate);
           if($updatePos) {
             echo '

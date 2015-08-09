@@ -61,7 +61,7 @@ else
 Editare <?php echo $output['name']; ?><hr />
 
 <form method="post" action="#"> 
-<input class="form-control" name="value" id="value" type="Text" size="50" maxlength="50" value="<?php echo $output['value']; ?>">
+<input class="form-control" name="value" id="value" type="Text" value="<?php echo $output['value']; ?>">
 <hr>
 <input class="btn btn-success" role="button" type="Submit" name="submit" value="Schimbă">
 </form>
