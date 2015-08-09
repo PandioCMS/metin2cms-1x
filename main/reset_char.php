@@ -21,8 +21,13 @@
         $toGoMin = floor(($toGoTime)/60);
         $toGoSek = ($toGoTime)%60;
         if(($difSpielzeit/60)>=5) {
-        
-          $sqlUpdate = "UPDATE player.player SET map_index='".$resetPos[$getChar->empire]['map_index']."', x='".$resetPos[$getChar->empire]['x']."', y='".$resetPos[$getChar->empire]['y']."', 	exit_x='".$resetPos[$getChar->empire]['x']."', exit_y='".$resetPos[$getChar->empire]['y']."', exit_map_index='".$resetPos[$getChar->empire]['map_index']."', horse_riding='0' WHERE id='".$_GET['char']."' LIMIT 1";
+        		
+		if($getChar->empire=='1') { $mapindex = "1"; $x = "4742"; $y = "9544";} //regat rosu
+		elseif($getChar->empire=='2') { $mapindex = "21"; $x = "632"; $y = "1661";} //regat galben
+		elseif($getChar->empire=='3') { $mapindex = "41"; $x = "9601"; $y = "2687";} //regat albastru
+
+		
+          $sqlUpdate = "UPDATE player.player SET map_index='".$mapindex."', x='".$x."', y='".$y."', exit_x='".$x."', exit_y='".$y."', exit_map_index='".$mapindex."', horse_riding='0' WHERE id='".$_GET['char']."' LIMIT 1";
           $updatePos = mysqli_query($sqlServ, $sqlUpdate);
           if($updatePos) {
             echo '

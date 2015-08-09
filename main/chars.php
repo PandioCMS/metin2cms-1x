@@ -27,8 +27,8 @@
     $x=0;
     while($getChars = mysqli_fetch_object($qryChars)) {
         echo'<tr>
-          <td> <a href="index.php?page=reset_char&char='.$getChars->id.'" title="Deblocare caracter">'.$getChars->name.'</a></td>
-          <td>'.$aRassen[$getChars->job].'&nbsp;&nbsp;</td>
+          <td><a href="index.php?page=reset_char&char='.$getChars->id.'" title="Deblocare caracter">'.$getChars->name.'</a></td>
+          <td><img src="images/chars/misc/'.$getChars->job.'.png" height="30" width="30"></td>
           <td>'.$getChars->level.'</td>
           <td>'.$getChars->playtime.' Minute</td>
           <td>'.$getChars->guild_name.'</td>

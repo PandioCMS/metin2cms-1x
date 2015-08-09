@@ -7,15 +7,20 @@ echo '	<div class="page-header">
 		<p>Datele utilizatorului</p>
 
       </div>';
+  if(isset($_SESSION['user_admin']) && checkInt($_SESSION['user_admin']) && $_SESSION['user_admin']>=0) {
+		$sqlCoins = "SELECT coins FROM account.account WHERE id='".((isset($sqlServ) && is_object($sqlServ)) ? mysqli_real_escape_string($sqlServ, $_SESSION['user_id']) : ((trigger_error("[MT2CMS] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""))."' LIMIT 1";
+        $qryCoins = mysqli_query($sqlServ, $sqlCoins);
+        $getCoins = mysqli_fetch_object($qryCoins);
+		
 echo "	<ul class=\"list-group\">
             <li class=\"list-group-item\">Cont de utilizator: <span class=\"label label-info\"><b>" . $_SESSION['id'] . "</b></span></li>
             <li class=\"list-group-item\">E-mail:  <span class=\"label label-info\"><b>" . $_SESSION['email'] . " </b></span></li>
-            <li class=\"list-group-item\">Monede Dragon: <span class=\"label label-warning\"><b> " . $_SESSION['coins'] . " Monezi</b></span></li>
+            <li class=\"list-group-item\">Monede Dragon: <span class=\"label label-warning\"><b> " . $getCoins->coins . " Monezi</b></span></li>
             <li class=\"list-group-item\">Numele real:  <span class=\"label label-info\"><b>" . $_SESSION['real_name'] . "</b></span></li>
             <li class=\"list-group-item\">Cod &#351;tergere caractere:   <span class=\"label label-info\"><b>" . $_SESSION['social_id'] . " </b></span></li>
           </ul>
 ";
-
+}
 ?>
 <br>
 <div class="list-group">
