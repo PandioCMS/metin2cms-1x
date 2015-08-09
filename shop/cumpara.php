@@ -42,11 +42,12 @@ header("Location: login.php");
       Achizitionare <?echo $items; ?>
     </h1>
 <?php
-	$get_pos = mysqli_query($sqlServ, "SELECT pos from player.item where owner_id='$id_username' AND `window` = 'MALL' ORDER BY id DESC");
-	$pos = mysqli_fetch_array($get_pos);
-	$poss = $pos['pos'];
-	$add_poss = 1;
-	if($coins >= $pret && $poss == 0){
+
+	$itemscount = mysqli_query($sqlServ, "SELECT count(*) \"total\" from player.item where owner_id='$id_username' AND `window` = 'MALL'");
+	$icount =  mysqli_fetch_row($itemscount);
+
+   if($coins >= $pret){
+	if($icount[0] <= 6){
 	
 	$data = date('Y-m-d H:i:s');
 	
@@ -68,22 +69,6 @@ header("Location: login.php");
                 Obiectul a fost adăugat în contul tău.
 	</p><br class="clearfloat"></br></div></div>
 	</div>	
-<?php
-} else {
-?>
-<div class="dynContent"><div id="confirmBox" class="item"><div class="itemDesc confirmDesc"><div class="thumbnailBgSmall"><img width="63px" height="63px" src="http://gf1.geo.gfsrv.net/cdnc7/7227be80292ec244a17496ca9b2528.png"></img></div><p><span class="confirmTitle">
-      Achiziționare a eșuat.
-    </span><br />
-    N-ai suficiente monede dragon <strong>sau</strong> nu ai loc în depozit.<br/>
-	<strong>Depozitul trebuie să fie gol când cumperi un item.</strong>
-	</p><br class="clearfloat"></br></div></div>
-	</div>
-<?php
-}
-?>
-<?php
-	if($coins >= $pret && $poss == 0){
-?>
 	<div class="hint"><div class="itemDesc messageDesc"><p><span class="hintTitle">
       Informație
     </span><br></br>
@@ -91,8 +76,30 @@ header("Location: login.php");
                 Vei găsi acum obiectul achiziționat în Depozitul Item-Shop (care poate fi localizat prin butonul din inventar).            
     </p><br class="clearfloat"></br></div></div>
 <?php
+} else {
+?>
+<div class="dynContent"><div id="confirmBox" class="item"><div class="itemDesc confirmDesc"><div class="thumbnailBgSmall"><img width="63px" height="63px" src="http://gf1.geo.gfsrv.net/cdnc7/7227be80292ec244a17496ca9b2528.png"></img></div><p><span class="confirmTitle">
+      Achiziționare a eșuat.
+    </span><br />
+    <strong>Nu ai suficient loc în depozit</strong>, limita este de 7 obiecte.<br/>
+	<strong>Te rugăm să eliberezi depozitul!</strong>
+	</p><br class="clearfloat"></br></div></div>
+	</div>
+<?php
+} }
+else {
+?>
+<div class="dynContent"><div id="confirmBox" class="item"><div class="itemDesc confirmDesc"><div class="thumbnailBgSmall"><img width="63px" height="63px" src="http://gf1.geo.gfsrv.net/cdnc7/7227be80292ec244a17496ca9b2528.png"></img></div><p><span class="confirmTitle">
+      Achiziționare a eșuat.
+    </span><br />
+    Nu ai suficiente Monede Dragon.<br/>
+	<strong>Pentru a putea cumpăra acest obiect, te rugăm să donezi pentru Monede Dragon.</strong>
+	</p><br class="clearfloat"></br></div></div>
+	</div>
+<?php
 }
 ?>
+
 	<div class="box suggestions"><h3>
       Alte iteme:
     </h3><ol id="suggestions">
@@ -104,7 +111,7 @@ header("Location: login.php");
 ?>
 	<li class="thumbnailBgSmall">
 	<a id="suggestion11979" class="suggestion" title="<?php echo $itemes->nume_item;?>" href="detalii.php?id=<?php echo $itemes->id;?>">
-	<img width="63" height="63" alt="<?php echo $itemes->nume_item;?>" onerror="this.src='img/error.png';" src="img/Kerokex/<?php echo $itemes->vnum;?>.png">
+	<img width="63" height="63" alt="<?php echo $itemes->nume_item;?>" onerror="this.src='img/error.png';" src="img/items/<?php echo $itemes->img;?>.png">
 	</img>
 	</a>
 	</li>
