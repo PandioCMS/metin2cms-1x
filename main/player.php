@@ -41,6 +41,9 @@ echo '<center>';
 if ($online == "1") { echo '<span class="label label-success">Online</span>'; } else {echo '<span class="label label-danger">Offline</span>';}
 
 
+$hours = floor($onlinemin / 60);
+$minutes = $onlinemin % 60;
+
 echo "<hr><img src=\"images/chars/$class.png\"></center>";
 echo "<table class=\"table table-striped table-bordered\">
 			<tbody>
@@ -70,7 +73,7 @@ echo " <img src=\"images/regat/$empire.jpg\"></td>
 				</tr>
 				<tr>
 					<td colspan=\"2\">Timp joc: </td>
-					<td colspan=\"2\">".intToTime($onlinemin, '%d h %d min %d sec')."</td>
+					<td colspan=\"2\">".$hours." ore & ".$minutes." minute</td>
 				</tr>
 				<tr>
 					<td colspan=\"2\">Trecere nivel: </td>

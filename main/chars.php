@@ -25,12 +25,15 @@
     WHERE player.account_id='".$_SESSION['user_id']."'";
     $qryChars = mysqli_query($sqlServ, $cmdChars);
     $x=0;
+
     while($getChars = mysqli_fetch_object($qryChars)) {
+    $hours = floor($getChars->playtime / 60);
+    $minutes = $getChars->playtime % 60;
         echo'<tr>
           <td><a href="index.php?page=reset_char&char='.$getChars->id.'" title="Deblocare caracter">'.$getChars->name.'</a></td>
           <td><img src="images/chars/misc/'.$getChars->job.'.png" height="30" width="30"></td>
           <td>'.$getChars->level.'</td>
-          <td>'.intToTime($getChars->playtime, '%d h %d min %d sec').'</td>';
+          <td>'.$hours.' ore & '.$minutes.' minute</td>';
 		  if ($getChars->guild_name == "") echo '<td>-</td>';
 		  else echo '<td>'.$getChars->guild_name.'</td>';
           echo'</tr>';
