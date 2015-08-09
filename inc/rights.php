@@ -20,6 +20,9 @@ $adminRights=array(
   
   'coupons_add' =>9,          // Adaugare cupoane
   'coupons_log' =>8,          // Statistici cupoane
+  
+  'presentation' =>8,          // Prezentare server
+  
 );
 
 ?>
