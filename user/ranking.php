@@ -17,6 +17,7 @@
 			<table class="table table-striped">
             <thead>
               <tr>
+                <th>Nr.</th>
                 <th>#</th>
                 <th>Nume</th>
                 <th>Nivel</th>
@@ -52,6 +53,7 @@ echo "";
 echo"
               <tr>
                 <td><span class=\"badge\">". $i ."</span></td>
+				<td><a href=\"index.php?page=player&char=".$array["name"]."\"><img src=\"images/chars/misc/".$array["job"].".png\" height=\"30\" width=\"30\"></a></td>
                 <td><a href=\"index.php?page=player&char=".$array["name"]."\">".$array["name"]."</a></td>
                 <td>".$array["level"]."</td>
 
@@ -69,7 +71,7 @@ echo"
 			<table class="table table-striped">
             <thead>
               <tr>
-                <th>#</th>
+                <th>Nr.</th>
                 <th>Nume</th>
                 <th>Nivel</th>
               </tr>
@@ -122,6 +124,7 @@ echo"";
 			<table class="table table-striped">
             <thead>
               <tr>
+                <th>Nr.</th>
                 <th>#</th>
                 <th>Nume</th>
               </tr>
@@ -156,6 +159,7 @@ echo "";
 echo"
               <tr>
                 <td><span class=\"badge\">". $i ."</span></td>
+				<td><a href=\"index.php?page=player&char=".$array["name"]."\"><img src=\"images/chars/misc/".$array["job"].".png\" height=\"30\" width=\"30\"></a></td>
                 <td><a href=\"index.php?page=player&char=".$array["name"]."\">".$array["name"]."</a></td>
 
               </tr>

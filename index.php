@@ -26,6 +26,16 @@
 <?php
 } }
 ?>
+<?php
+	$adm = isset($_GET['a']) ? sanitize($_GET['a']) : null;
+	if($adm) { 
+	if($_GET['a'] == "add_shop" or $_GET['a'] == "news_edit" or $_GET['a'] == "presentation") { ?>
+        <link href="css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="js/fileinput.js" type="text/javascript"></script>
+<?php
+} }
+?>
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="images/favicon.ico" />
 		<link rel="icon" type="image/gif" href="images/favicon.ico" />

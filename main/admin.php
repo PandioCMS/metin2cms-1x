@@ -90,6 +90,15 @@
 			case 'chat':
 				require 'user/admin/chat.php';
 				break;
+			case 'add_shop':
+				require 'user/admin/add_shop.php';
+				break;
+			case 'edit_cat':
+				require 'user/admin/edit_cat.php';
+				break;
+			case 'delete_item':
+				require 'user/admin/delete_item.php';
+				break;
 			default:
 				require 'user/admin/home.php';
 				break;

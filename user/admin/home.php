@@ -45,8 +45,24 @@
               <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-remove"></span> Șterge articole</h4>
             </a>
           </div>
+          </div>
+		  
+			<div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Gestionare magazin de obiecte (Item-Shop)</h3>
+            </div>
+            <div class="panel-body">
+            <a href="index.php?page=admin&amp;a=edit_cat" class="list-group-item">
+              <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-refresh"></span> Editează categoriile</h4>
+            </a>
+            <a href="index.php?page=admin&amp;a=add_shop" class="list-group-item">
+              <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-gift"></span> Adaugă obiecte</h4>
+            </a>
+            <a href="index.php?page=admin&amp;a=delete_item" class="list-group-item">
+              <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-trash"></span> Șterge obiecte</h4>
+            </a>
+          </div>
           </div><?php } ?>
-			
 			
             <div class="panel panel-primary">
             <div class="panel-heading">

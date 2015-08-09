@@ -161,6 +161,73 @@ function createHpTables() {
   PRIMARY KEY (`id`)
   );";    
   
+  $cmdHp[] = "CREATE TABLE IF NOT EXISTS `ishop_categorii` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nume` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+);";  
+
+  $cmdHp[] = "INSERT INTO `ishop_categorii` (`id`, `nume`) VALUES
+(1, 'Iteme noi'),
+(2, 'Iteme upgrade'),
+(3, 'Arme'),
+(4, 'Armuri'),
+(5, 'Accesorii'),
+(6, 'Animale de companie'),
+(7, 'Animale de calarit'),
+(8, 'Costume'),
+(9, 'Frizuri'),
+(10, 'Scuturi speciale'),
+(11, 'Pietre speciale'),
+(12, 'Altele');";  
+  
+  $cmdHp[] = "CREATE TABLE IF NOT EXISTS `item_ishop` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nume_item` varchar(255) NOT NULL,
+  `categorie` int(11) DEFAULT NULL,
+  `descriere` varchar(255) DEFAULT NULL,
+  `pret` int(11) DEFAULT NULL,
+  `data` datetime DEFAULT NULL,
+  `buc` int(11) DEFAULT NULL,
+  `owner_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `window` enum('INVENTORY','EQUIPMENT','SAFEBOX','MALL') NOT NULL DEFAULT 'INVENTORY',
+  `pos` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `count` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `vnum` int(11) unsigned NOT NULL DEFAULT '0',
+  `socket0` int(10) unsigned NOT NULL DEFAULT '0',
+  `socket1` int(10) unsigned NOT NULL DEFAULT '0',
+  `socket2` int(10) unsigned NOT NULL DEFAULT '0',
+  `socket3` int(10) unsigned NOT NULL DEFAULT '0',
+  `socket4` int(10) unsigned NOT NULL DEFAULT '0',
+  `socket5` int(10) unsigned NOT NULL DEFAULT '0',
+  `attrtype0` tinyint(4) NOT NULL DEFAULT '0',
+  `attrvalue0` smallint(6) NOT NULL DEFAULT '0',
+  `attrtype1` tinyint(4) NOT NULL DEFAULT '0',
+  `attrvalue1` smallint(6) NOT NULL DEFAULT '0',
+  `attrtype2` tinyint(4) NOT NULL DEFAULT '0',
+  `attrvalue2` smallint(6) NOT NULL DEFAULT '0',
+  `attrtype3` tinyint(4) NOT NULL DEFAULT '0',
+  `attrvalue3` smallint(6) NOT NULL DEFAULT '0',
+  `attrtype4` tinyint(4) NOT NULL DEFAULT '0',
+  `attrvalue4` smallint(6) NOT NULL DEFAULT '0',
+  `attrtype5` tinyint(4) NOT NULL DEFAULT '0',
+  `attrvalue5` smallint(6) NOT NULL DEFAULT '0',
+  `attrtype6` tinyint(4) NOT NULL DEFAULT '0',
+  `attrvalue6` smallint(6) NOT NULL DEFAULT '0',
+  `img` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `owner_id_idx` (`owner_id`),
+  KEY `item_vnum_index` (`vnum`)
+);";  
+  
+  $cmdHp[] = "CREATE TABLE IF NOT EXISTS `log_buyishop` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nume_cumparator` varchar(255) NOT NULL,
+  `item_cumparat` varchar(255) NOT NULL,
+  `data_cumpararii` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+);";  
+  
   $cmdHp[] = "INSERT INTO `presentation` (`id`, `title`, `message`, `date`) VALUES
 (1, '', '', '');";  
   

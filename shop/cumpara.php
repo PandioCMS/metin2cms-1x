@@ -1,0 +1,123 @@
+<?php
+	error_reporting(0);
+	session_start();
+	include("../inc/config.php");
+	include("../inc/constants.php");
+	include("../inc/functions.php");
+
+	$sqlHp = new mysqli(SQL_HP_HOST,  SQL_HP_USER,  SQL_HP_PASS);
+	$sqlServ = new mysqli(SQL_HOST,  SQL_USER,  SQL_PASS);
+			
+if(empty($_SESSION['id'])) {
+header("Location: login.php");
+				} else {
+	$user_id = $_SESSION['id'];
+	$get_info = mysqli_Query($sqlServ, "SELECT * from account.account where login='$user_id'");
+	$info = mysqli_fetch_Array($get_info);
+	$username = $info['login'];
+	$id_username = $info['id'];
+	$coins = $info['coins'];
+	$jcoins = $info['jcoins'];
+	
+	if (!isset($_GET['id'])) {
+		die("Trebuie sa alegi un item.");  
+	}
+	$id = intval($_GET['id']);
+	
+	$get_iteme = mysqli_query($sqlHp, "SELECT * FROM ".SQL_HP_DB.".item_ishop where id='$id'");
+	$item = mysqli_fetch_array($get_iteme);
+	$items = $item['nume_item'];
+	$pret = $item['pret'];
+	$buc = $item['buc'];
+	$window = $item['window'];
+	$pos = $item['pos'];
+	$count = $item['count'];
+	$vnum_item = $item['vnum'];
+	
+
+
+?>
+<div id="fancybox-content" style="border-width: 0px; width: 540px; height: 500px;">
+<div style="width:540px;height:500px;overflow: hidden;position:relative;"><h1>
+      Achizitionare <?echo $items; ?>
+    </h1>
+<?php
+	$get_pos = mysqli_query($sqlServ, "SELECT pos from player.item where owner_id='$id_username' AND `window` = 'MALL' ORDER BY id DESC");
+	$pos = mysqli_fetch_array($get_pos);
+	$poss = $pos['pos'];
+	$add_poss = 1;
+	if($coins >= $pret && $poss == 0){
+	
+	$data = date('Y-m-d H:i:s');
+	
+	// LOG
+	mysqli_query($sqlHp, "INSERT INTO ".SQL_HP_DB.".log_buyishop (nume_cumparator, item_cumparat, data_cumpararii) VALUES ('$user_id', '$items', '$data')");
+	// Scădem Coins
+	mysqli_query($sqlServ, "UPDATE account.account SET `coins` = `coins` - ".$pret." WHERE `login` = '$user_id'");
+	// Adăugăm JD
+	mysqli_query($sqlServ, "UPDATE account.account SET `jcoins` = `jcoins` + ".$pret." WHERE `login` = '$user_id'");
+	// Insertăm Item-ul
+	mysqli_query($sqlServ, "INSERT INTO player.item
+				(owner_id,window,pos,count,vnum,attrtype0, attrvalue0, attrtype1, attrvalue1, attrtype2, attrvalue2, attrtype3, attrvalue3, attrtype4, attrvalue4, attrtype5, attrvalue5, attrtype6, attrvalue6, socket0, socket1, socket2)
+				VALUES 
+				('$id_username','MALL','$add_poss','1','".$vnum_item."','".$item['attrtype0']."', '".$item['attrvalue0']."', '".$item['attrtype1']."', '".$item['attrvalue1']."', '".$item['attrtype2']."', '".$item['attrvalue2']."', '".$item['attrtype3']."', '".$item['attrvalue3']."', '".$item['attrtype4']."', '".$item['attrvalue4']."', '".$item['attrtype5']."', '".$item['attrvalue5']."', '".$item['attrtype6']."', '".$item['attrvalue6']."', '".$item['socket0']."', '".$item['socket1']."', '".$item['socket2']."')");
+?>
+<div class="dynContent"><div id="confirmBox" class="item"><div class="itemDesc confirmDesc"><div class="thumbnailBgSmall"><img width="63px" height="63px" src="http://gf1.geo.gfsrv.net/cdnc7/7227be80292ec244a17496ca9b2528.png"></img></div><p><span class="confirmTitle">
+      Achiziționare completă
+    </span><br />
+                Obiectul a fost adăugat în contul tău.
+	</p><br class="clearfloat"></br></div></div>
+	</div>	
+<?php
+} else {
+?>
+<div class="dynContent"><div id="confirmBox" class="item"><div class="itemDesc confirmDesc"><div class="thumbnailBgSmall"><img width="63px" height="63px" src="http://gf1.geo.gfsrv.net/cdnc7/7227be80292ec244a17496ca9b2528.png"></img></div><p><span class="confirmTitle">
+      Achiziționare a eșuat.
+    </span><br />
+    N-ai suficiente monede dragon <strong>sau</strong> nu ai loc în depozit.<br/>
+	<strong>Depozitul trebuie să fie gol când cumperi un item.</strong>
+	</p><br class="clearfloat"></br></div></div>
+	</div>
+<?php
+}
+?>
+<?php
+	if($coins >= $pret && $poss == 0){
+?>
+	<div class="hint"><div class="itemDesc messageDesc"><p><span class="hintTitle">
+      Informație
+    </span><br></br>
+      
+                Vei găsi acum obiectul achiziționat în Depozitul Item-Shop (care poate fi localizat prin butonul din inventar).            
+    </p><br class="clearfloat"></br></div></div>
+<?php
+}
+?>
+	<div class="box suggestions"><h3>
+      Alte iteme:
+    </h3><ol id="suggestions">
+	<?php
+		$get_recomandare = mysqli_query($sqlHp, "SELECT * FROM ".SQL_HP_DB.".item_ishop 
+		ORDER BY rand()
+		LIMIT 7");
+		while($itemes = mysqli_fetch_object($get_recomandare)) {
+?>
+	<li class="thumbnailBgSmall">
+	<a id="suggestion11979" class="suggestion" title="<?php echo $itemes->nume_item;?>" href="detalii.php?id=<?php echo $itemes->id;?>">
+	<img width="63" height="63" alt="<?php echo $itemes->nume_item;?>" onerror="this.src='img/error.png';" src="img/Kerokex/<?php echo $itemes->vnum;?>.png">
+	</img>
+	</a>
+	</li>
+<?php
+}
+?>
+	</ol>
+	</div>
+	</div>
+	</div>
+	<a id="fancybox-close" style="display: inline;"></a>
+	<div id="fancybox-title" style="display: block;">
+	</div>
+<?php
+}
+?>
