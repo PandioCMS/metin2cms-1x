@@ -1,4 +1,13 @@
 <?php
+if(!empty($_SESSION['id'])){
+$ch = mysqli_query($sqlHp, "SELECT * FROM ".SQL_HP_DB.".settings WHERE id=10");
+$chat = mysqli_fetch_assoc($ch);
+if ($chat['value'] == "1") {
+echo'<div class="well">';
+    include("chat/chatroom.php");
+echo'</div></br>';
+} }
+
 if(empty($_SESSION['id'])){
 		echo "
 <div class=\"list-group\">
@@ -57,4 +66,10 @@ if(empty($_SESSION['id'])){
 	 echo '<input type="button" class="btn btn-primary btn-lg" value=" Ultima pagină ">';
 	}
 	 }
+if(!empty($_SESSION['id'])){
+if ($chat['value'] == "2") {
+echo'<div class="well">';
+    include("chat/chatroom.php");
+echo'</div>';
+} }
 ?>

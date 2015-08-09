@@ -63,6 +63,7 @@ echo"
 
             </tbody>
           </table>
+	<center><a class="btn btn-primary btn-xs" href="?page=players">Clasament jucători complet &#187;</a></center>
   </div>
   <div class="tab-pane" id="guilds">
 			<table class="table table-striped">
@@ -115,6 +116,7 @@ echo"";
 ?>	
             </tbody>
           </table>
+		<center><a class="btn btn-primary btn-xs" href="?page=players">Clasament bresle complet &#187;</a></center>
   </div>
   <div class="tab-pane" id="yang">
 			<table class="table table-striped">

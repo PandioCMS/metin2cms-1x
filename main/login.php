@@ -5,8 +5,8 @@ if(empty($_SESSION['id'])){
 
 			((bool)mysqli_query($sqlServ, "USE account"));
 			
-		$user = ((isset($sqlServ) && is_object($sqlServ)) ? mysqli_real_escape_string($sqlServ, $_POST['user']) : ((trigger_error("[MT2CMS] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
-		$pw = ((isset($sqlServ) && is_object($sqlServ)) ? mysqli_real_escape_string($sqlServ, $_POST['pw']) : ((trigger_error("[MT2CMS] Fix the mysql_escape_string() call! This code does not work.", E_USER_ERROR)) ? "" : ""));
+		$user = sanitize(stripInput($_POST['user']));
+		$pw = sanitize(stripInput($_POST['pw']));
 		
 			$check = "SELECT * from account where login = '" . $user . "' and password = PASSWORD('$pw')";
 				$query = mysqli_query($sqlServ, $check);
@@ -21,7 +21,7 @@ if(empty($_SESSION['id'])){
 			// SESSION variable start //
 			if($array['status']=='OK') {//daca contul nu este blocat
 			$_SESSION['id'] = $array['login'];
-			$_SESSION['coins'] = $array['coins'];
+			//$_SESSION['coins'] = $array['coins'];
 			$_SESSION['email'] = $array['email'];
 			$_SESSION['real_name'] = $array['real_name'];
 			$_SESSION['social_id'] = $array['social_id'];
@@ -30,6 +30,24 @@ if(empty($_SESSION['id'])){
             $_SESSION['user_name'] = $array['login'];
             $_SESSION['user_coins'] = $array['coins'];
             $_SESSION['user_email'] = $array['email'];
+			//Selectare nume chat
+			$BestChar = "SELECT player.name, player.level, player.exp, player.job
+			FROM player.player
+			WHERE player.account_id='".$_SESSION['user_id']."' ORDER BY player.level DESC, player.exp DESC Limit 1";
+			$sql = mysqli_query($sqlServ, $BestChar);
+	
+			$check = mysqli_num_rows($sql);
+	
+			if ($check == 0) {
+				$_SESSION['chat'] = $_SESSION['id'];
+				$_SESSION['avatar'] = "user";
+			}
+			else {
+				while($getBestChar = mysqli_fetch_object($sql)) {
+					$_SESSION['chat'] = $getBestChar->name;
+					$_SESSION['avatar'] = $getBestChar->job; }
+			}
+			//Selectare nume chat (sf)
 			echo "<meta http-equiv='refresh' content='0; URL=index.php?page=home'>"; }
 			
 			else if($array['status']=='BLOCK') {//daca contul este blocat
@@ -47,17 +65,17 @@ if(empty($_SESSION['id'])){
         <h1><?php include("./user/name_sv.php"); ?> - Logare</h1>
       </div>
 	  <div class="inner-form-border">
-						<strong><a id="topwLost" href="index.php?page=passwordlost" title="Ai uitat parola?">Ai uitat parola?</a></strong>
 					</div>
 					<div class="well">
 						<form name="loginForm" id="loginForm" action="index.php?page=login" method="post">
 							<div>
 								<label for="username">Nume de utilizator: *</label>
-								<input AUTOCOMPLETE="off" type="text" class="form-control input-lg validate[required,custom[noSpecialCharacters],length[3,16]]" id="username" name="user" maxlength="16" value=""/>
+								<input type="text" class="form-control input-lg" name="user" placeholder="Nume" required>
+
 							</div>
 							<div>
 								<label for="password">Parol&#259;: *</label>
-								<input AUTOCOMPLETE="off" type="password" class="form-control input-lg validate[required,length[5,16]]" id="password" name="pw" maxlength="16" value=""/>
+								<input type="password" class="form-control input-lg" name="pw" placeholder="Parola" required>
 							</div>
 							<div id="checkerror">
                             <p>Scrie numele &#351;i parola din joc apoi apas&#259; butonul Login pentru a vedea meniurile interne ale siteului!</p>

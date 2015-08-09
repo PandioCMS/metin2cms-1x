@@ -23,7 +23,11 @@
             <a href="index.php?page=admin&a=presentation" class="list-group-item">
               <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-asterisk"></span> Prezentarea generală a serverului</h4>
               <p class="list-group-item-text">Crează o pagina de prezentare a serverului.</p>
-            </a></br><?php } ?>
+            </a><?php } ?>
+            <a href="index.php?page=admin&a=chat" class="list-group-item">
+              <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-envelope"></span> Poziție chat</h4>
+              <p class="list-group-item-text">Setează dacă chat-ul să apară sau nu.</p>
+            </a></br>
 			
 		<?php if($_SESSION['user_admin']>=$adminRights['web_news']) { ?>
             <div class="panel panel-primary">

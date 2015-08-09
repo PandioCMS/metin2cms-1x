@@ -159,10 +159,10 @@ function createHpTables() {
   `message` text NOT NULL,
   `date` text NOT NULL,
   PRIMARY KEY (`id`)
-  );";  
+  );";    
   
   $cmdHp[] = "INSERT INTO `presentation` (`id`, `title`, `message`, `date`) VALUES
-(1, '', '', '');";
+(1, '', '', '');";  
   
   $cmdHp[] = "CREATE TABLE IF NOT EXISTS `settings` (
   `id` int(11) NOT NULL,
@@ -180,7 +180,8 @@ function createHpTables() {
 (6, 'Link! Facebook', '".$webTemp['facebook']."'),
 (7, 'Cod Prezentare YouTube', '".$webTemp['youtube']."'),
 (8, 'Inregistrare activa?', '".$webTemp['reg']."'),
-(9, 'Link Forum.', '".$webTemp['forum']."');";
+(9, 'Link Forum.', '".$webTemp['forum']."'),
+(10, 'Pozitie chat.', '".$webTemp['chat_location']."');";
  
   foreach($cmdHp AS $blub) {
     echo '<p style="font-size:11px;">'.$blub;
@@ -303,6 +304,37 @@ if(isset($_GET['step']) && !empty($_GET['step'])) {
         </tr>	
         <tr>
 			<th style="text-align:left;" class="page-header">
+				<h1>Chat</h1>
+			</th>
+        </tr>
+        <tr>
+          <td>Doriți chat?</td>
+          <td><select name="chat_location" id="chat_location" class="form-control">
+				<option selected="selected" value="0">Dezactivat</option>
+				<option value="1">Prima pagină - SUS</option>
+				<option value="2">Prima pagină - JOS</option>
+				<option value="3">Pe pagina de chat</option>
+			  </select>
+		  </td>
+        </tr>
+        <tr>
+          <td>Numărul de mesaje care să apară</td>
+          <td><input type="number" class="form-control" size="20" maxlength="50" value="5" name="postlimit"/></td>
+        </tr>
+        <tr>
+          <td>Câte secunde se așteaptă între postări?</td>
+          <td><input type="number" class="form-control" size="20" maxlength="50" value="6" name="timelimit"/></td>
+        </tr>
+        <tr>
+          <td>Numărul maxim de caractere în postări</td>
+          <td><input type="number" class="form-control" size="20" maxlength="50" value="100" name="maxline"/></td>
+        </tr>
+        <tr>
+          <td>În câte secunde se reîmprospatează chat-ul?</td>
+          <td><input type="number" class="form-control" size="20" maxlength="50" value="5" name="refresh"/></td>
+        </tr>
+        <tr>
+			<th style="text-align:left;" class="page-header">
 				<h1>Bază de date server</h1>
 			</th>
         </tr>
@@ -393,6 +425,7 @@ if ($checkGS->connect_errno) {
       $webTemp[\'youtube\']="'.$_POST['youtube'].'";
       $webTemp[\'reg\']="'.$_POST['reg'].'";
       $webTemp[\'forum\']="'.$_POST['forum'].'";
+      $webTemp[\'chat_location\']="'.$_POST['chat_location'].'";
             
     ?>';
 	
@@ -400,7 +433,21 @@ if ($checkGS->connect_errno) {
     
     $writeTemp = fwrite($cfgFileTemp,$cfgTemp);
 	
-    if($writeCfg && $writeTemp)
+    $cfgChat ='<?PHP
+  
+	$chat_datafile = "chat.dat";
+	$chat_postlimit = "'.$_POST['postlimit'].'";	// Numarul de mesaje care sa apara
+	$chat_timelimit = "'.$_POST['timelimit'].'";	// Cate secunde se asteapta intre postari?
+	$chat_maxline = "'.$_POST['maxline'].'";	// Numarul maxim de caractere in postari
+	$chat_refresh = "'.$_POST['refresh'].'";		// In cate secunde se reimprospateaza chat-ul?
+
+    ?>';
+	
+    $cfgFileChat = fopen('./chat/chatconfig.php','w+');
+    
+    $writeChat = fwrite($cfgFileChat,$cfgChat);
+	
+    if($writeCfg && $writeTemp && $writeChat)
     {
       echo'<p>
         <b>Configurația a fost scrisă!</b><br>

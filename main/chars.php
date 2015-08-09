@@ -30,9 +30,10 @@
           <td><a href="index.php?page=reset_char&char='.$getChars->id.'" title="Deblocare caracter">'.$getChars->name.'</a></td>
           <td><img src="images/chars/misc/'.$getChars->job.'.png" height="30" width="30"></td>
           <td>'.$getChars->level.'</td>
-          <td>'.$getChars->playtime.' Minute</td>
-          <td>'.$getChars->guild_name.'</td>
-        </tr>';
+          <td>'.intToTime($getChars->playtime, '%d h %d min %d sec').'</td>';
+		  if ($getChars->guild_name == "") echo '<td>-</td>';
+		  else echo '<td>'.$getChars->guild_name.'</td>';
+          echo'</tr>';
       $x++;
     }
     echo'</table>';

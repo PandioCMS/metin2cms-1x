@@ -39,7 +39,7 @@
     }
   ?>
 <div class="well">
-          <form name="registerForm" id="registerForm" action="index.php?page=camp_p" method="POST">
+          <form name="registerForm" id="registerForm" action="index.php?page=safebox" method="POST">
           <div>  
 		  					<div>
 							<label for="password">Parola veche:*

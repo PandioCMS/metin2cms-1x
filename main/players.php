@@ -84,8 +84,9 @@
 				<tr>
 					<th>#</th>
 					<th>Nume jucător</th>
-					<th>Nivel</th>
 					<th>Regat</th>
+					<th>Breaslă</th>
+					<th>Nivel</th>
 					<th>Experiență</th>
 				</tr>
 			</thead>
@@ -111,10 +112,12 @@
     echo "<tr>";
     echo "<td><span class=\"badge\">".$x."</span></td>";
     echo "<td><a href=\"index.php?page=player&char=".$getPlayers->name."\">".$getPlayers->name."</td>";
-    echo "<td>".$getPlayers->level."</td>";
 	echo "<td><center>";if(!empty($getPlayers->empire)) {
     echo '<img src="images/regat/'.$getPlayers->empire.'.jpg" height="20"/></center></td>';
     }
+	if ($getPlayers->guild_name == "") echo '<td>-</td>';
+	else echo '<td>'.$getPlayers->guild_name.'</td>';
+    echo "<td>".$getPlayers->level."</td>";
 	echo "<td>".$getPlayers->exp."</td>";
     echo "</tr>";
     $x++;

@@ -27,6 +27,14 @@
 			?>
 			<li><a href="<?php echo $forum['value']; ?>">Forum</a></li>
 			<?php } ?>
+			<?php
+			if(!empty($_SESSION['id'])){
+			$ch = mysqli_query($sqlHp, "SELECT * FROM ".SQL_HP_DB.".settings WHERE id=10");
+			$chat = mysqli_fetch_assoc($ch);
+			if ($chat['value'] == "3") {
+			?>
+			<li><a href="?page=chat">Chat</a></li>
+			<?php }} ?>
 		</ul>
 		<div class="col-sm-3 col-md-3 pull-right">
           <form class="navbar-form" role="search" action="index.php" method="get">

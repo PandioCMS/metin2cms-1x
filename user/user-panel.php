@@ -6,8 +6,8 @@ if(!isset($_SESSION)){session_start();}
         $qryCoins = mysqli_query($sqlServ, $sqlCoins);
         $getCoins = mysqli_fetch_object($qryCoins);
 ?>
-
-     <center>Monede de&#355;inute: <b>
+	<center><h4>Salutare, <font color="#428bca"><b><?php echo $_SESSION['real_name']; ?></b></font>!</h4> <hr>
+     Monede de&#355;inute: <b>
 	<?PHP 
 	echo $getCoins->coins;
 	?></b> <img src="./images/icons/coins.png" width="16" height="16" /></center>
@@ -17,6 +17,13 @@ if(!isset($_SESSION)){session_start();}
         if($_SESSION['user_admin']>0) { echo'<a class="list-group-item active" href="?page=admin"><img src="./images/icons/user_red.png" width="16" height="16" /> Administrare</a>'; }
       ?>
       <a class="list-group-item" href="?page=profil"><img src="./images/icons/user_suit.png" width="16" height="16" /> Administrează Cont</a>
+			<?php
+			$ch = mysqli_query($sqlHp, "SELECT * FROM ".SQL_HP_DB.".settings WHERE id=10");
+			$chat = mysqli_fetch_assoc($ch);
+			if ($chat['value'] == "3") {
+			?>
+			<a class="list-group-item" href="?page=chat"><span class="glyphicon glyphicon-envelope"></span> Chat cu ceilalți jucători</a>
+			<?php } ?>
       <a class="list-group-item" href="?page=password"><img src="./images/icons/user_edit.png" width="16" height="16" /> Schimbă parola</a>
       <a class="list-group-item" href="?page=coupon"><img src="./images/icons/coupon.png" width="16" height="16" /> Validează un cupon</a>
       <a class="list-group-item" href="?page=logout"><img src="./images/icons/delogare.png" width="16" height="16" /> Ieșire</a>

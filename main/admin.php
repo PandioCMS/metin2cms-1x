@@ -87,6 +87,9 @@
 			case 'users':
 				require 'user/admin/users.php';
 				break;
+			case 'chat':
+				require 'user/admin/chat.php';
+				break;
 			default:
 				require 'user/admin/home.php';
 				break;

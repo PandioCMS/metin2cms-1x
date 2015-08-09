@@ -99,19 +99,19 @@ if(isset($_POST['register']) && isset($_POST['agreed'])) {
 					<tbody>
 						<tr>
 							<td>Nume de utilizator:</td>
-							<td><input type="text" class="form-control" name="username" placeholder="Numele dorit..." required></td>
+							<td><input type="text" class="form-control" name="username" pattern=".{5,16}" maxlength="16" placeholder="Numele dorit..." required title="Între 5 și 16 caractere permise."></td>
 						</tr>
 						<tr>
 							<td>Parolă:</td>
-							<td><input type="password" class="form-control" name="password" placeholder="Parolă" required></td>
+							<td><input type="password" class="form-control" name="password" pattern=".{5,16}" maxlength="16" placeholder="Parolă" required title="Între 5 și 16 caractere permise."></td>
 						</tr>
 						<tr>
 							<td>Repetă parola:</td>
-							<td><input type="password" class="form-control" name="rpassword" placeholder="Repetare parolă" required></td>
+							<td><input type="password" class="form-control" name="rpassword" pattern=".{5,16}" maxlength="16" placeholder="Repetare parolă" required title="Între 5 și 16 caractere permise."></td>
 						</tr>
 						<tr>
 							<td>Adresă de e-mail:</td>
-							<td><input type="text" class="form-control" name="usermail" placeholder="exemplu@domeniu.ro" required></td>
+							<td><input type="text" class="form-control" name="usermail" pattern=".{7,64}" maxlength="64" placeholder="exemplu@domeniu.ro" required title="Maxim 64 caractere."></td>
 						</tr>
 						<tr>
 							<td>Cod ștergere caracter:</td>
@@ -119,7 +119,7 @@ if(isset($_POST['register']) && isset($_POST['agreed'])) {
 						</tr>
 						<tr>
 							<td>Nume real:</td>
-							<td><input type="username" class="form-control" name="realname" placeholder="Numele tău" required></td>
+							<td><input type="username" class="form-control" name="realname" pattern=".{3,15}" maxlength="15" placeholder="Numele tău" required title="Maxim 15 caractere."></td>
 						</tr>
 						<tr>
 							<td>Sunt de acord cu <a href="index.php?page=rules">regulamentul

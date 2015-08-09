@@ -1,4 +1,5 @@
 <?php 
+error_reporting(0);
 		$page = isset($_GET['page']) ? $_GET['page'] : null;
 
 		switch ($page) {
@@ -52,6 +53,9 @@
 				break;
 			case 'rules':
 				require 'main/rules.php';
+				break;
+			case 'chat':
+				require 'main/chat.php';
 				break;
 			default:
 				require 'main/home.php';

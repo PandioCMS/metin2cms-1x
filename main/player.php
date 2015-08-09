@@ -1,13 +1,19 @@
-<?php $char = isset($_GET['char']) ? $_GET['char'] : null; 
-$check = mysqli_query($sqlServ, "SELECT * FROM player WHERE name LIKE '$char'");
-$sql = mysqli_num_rows($check);
-if ($sql > 0) {
+<?php 
+$char = isset($_GET['char']) ? sanitize($_GET['char']) : null;
+$check = $sqlServ->query("SELECT name FROM player.player WHERE name = '{$char}'");
+$checkPlayer = $check->fetch_row();
+$checkCount = $check->num_rows;
 ?>
-<div class="page-header">
-        <h1><?php if($char) { echo "Profilul lui $char"; } else { echo 'Negăsit'; }?></h1>
-      </div>
-<div class="well">
+
 <?php
+if(isset($_GET['char']) == $checkPlayer && $checkCount === 1) :
+	$check->free();
+	
+echo '<div class="page-header">
+        <h1>Profilul lui '.$char.'</h1>
+      </div>
+<div class="well">';
+
 $sql = "SELECT * FROM player WHERE name LIKE '$char'";
 $sql2 = mysqli_query($sqlServ, $sql);
 $row = mysqli_fetch_object($sql2);
@@ -29,7 +35,13 @@ $iq = $row->iq;
 $st = $row->st;
 $dx = $row->dx;
 
-echo "<center><img src=\"images/chars/$class.png\"></center>";
+$status = mysqli_query($sqlServ, "SELECT COUNT(*) as count FROM player WHERE DATE_SUB(NOW(), INTERVAL 5 MINUTE) < last_play AND name = '$char';"); 
+$online = mysqli_fetch_object($status)->count;
+echo '<center>';
+if ($online == "1") { echo '<span class="label label-success">Online</span>'; } else {echo '<span class="label label-danger">Offline</span>';}
+
+
+echo "<hr><img src=\"images/chars/$class.png\"></center>";
 echo "<table class=\"table table-striped table-bordered\">
 			<tbody>
 				<tr>
@@ -58,13 +70,13 @@ echo " <img src=\"images/regat/$empire.jpg\"></td>
 				</tr>
 				<tr>
 					<td colspan=\"2\">Timp joc: </td>
-					<td colspan=\"2\">$onlinemin Minute</td>
+					<td colspan=\"2\">".intToTime($onlinemin, '%d h %d min %d sec')."</td>
 				</tr>
 				<tr>
 					<td colspan=\"2\">Trecere nivel: </td>
 					<td colspan=\"2\">",$levelstep,"/4</td>
 				</tr>";
-				
+
 echo "			<tr>
 					<td colspan=\"2\">Nivel cal: </td>
 					<td colspan=\"2\">";
@@ -175,13 +187,11 @@ echo "			<tr>
 
 echo"			</tbody>
 		</table></div>";
-		}
-else {
-		echo "<div class=\"alert alert-danger\" role=\"alert\">
-				Caracterul căutat <strong>nu există</strong>! 
-			</div>";  
-			}
+
 ?>
-
-
+<?php else: ?>
+<div class="alert alert-danger" role="alert">
+	<p>Jucătorul nu există!</p>
+</div>
+<?php endif; ?>
 <a href="javascript: history.go(-1)" class="btn btn-warning" role="button">&#171; &Icirc;napoi</a>

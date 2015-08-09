@@ -34,7 +34,7 @@
 				Jucători online: 
 				<?php
 					((bool)mysqli_query($sqlServ, "USE player")); 
-					$exe = mysqli_query($sqlServ, "SELECT COUNT(*) as count FROM player WHERE DATE_SUB(NOW(), INTERVAL 7 MINUTE) < last_play;"); 
+					$exe = mysqli_query($sqlServ, "SELECT COUNT(*) as count FROM player WHERE DATE_SUB(NOW(), INTERVAL 5 MINUTE) < last_play;"); 
 					$player_online = mysqli_fetch_object($exe)->count;
 					echo "<span class=\"badge\"><b>$player_online</b></span>"; 
 				?>
