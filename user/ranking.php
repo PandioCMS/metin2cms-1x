@@ -25,42 +25,20 @@
             </thead>
             <tbody>
 <?php
-echo "";
-		((bool)mysqli_query($sqlServ, "USE player")); // Select DB 'player'
-		
-	$test = "SELECT * from player";
-		$testquery = mysqli_query($sqlServ, $test);
-			$num2 = mysqli_num_rows($testquery);
+	$players = "SELECT * from player";
+		$playersquery = mysqli_query($sqlServ, $players);
 
-		if(isset($_GET['max'])) {
-			$get = $_GET['max'];
-		} else {
-		$get = '0';
-		?>
-<?php
-((bool)mysqli_query($sqlServ, "USE player")); // Select DB 'player'
-			
-// Select player etc from db //
-
-
-	$rank = "SELECT * from player WHERE name NOT LIKE '[%]%' order by level desc limit $get,5";
+	$rank = "SELECT * from player order by level desc limit 5";
 		$query = mysqli_query($sqlServ, $rank);
-	$i = 0;
-	
+			$i = 0;
 			while($array = mysqli_fetch_array($query)) {
 				$i = $i + 1;
-				$zF = ($i%2==0) ? "light" : "";
-echo"
-              <tr>
+		echo"<tr>
                 <td><span class=\"badge\">". $i ."</span></td>
 				<td><a href=\"index.php?page=player&char=".$array["name"]."\"><img src=\"images/chars/misc/".$array["job"].".png\" height=\"30\" width=\"30\"></a></td>
                 <td><a href=\"index.php?page=player&char=".$array["name"]."\">".$array["name"]."</a></td>
                 <td>".$array["level"]."</td>
-
-              </tr>
-";
-			}
-}							
+              </tr>"; }
 ?>	
 
             </tbody>
@@ -78,43 +56,18 @@ echo"
             </thead>
             <tbody>
 <?php
-echo "";
-		((bool)mysqli_query($sqlServ, "USE player")); // Select DB 'player'
-		
-	$test = "SELECT * from player";
-		$testquery = mysqli_query($sqlServ, $test);
-			$num2 = mysqli_num_rows($testquery);
 
-		if(isset($_GET['max'])) {
-			$get = $_GET['max'];
-		} else {
-		$get = '0';
-		?>
-<?php
-((bool)mysqli_query($sqlServ, "USE player")); // Select DB 'player'
-			
-// Select player etc from db //
-
-
-	$rank = "SELECT * from guild order by level desc limit $get,5";
-		$query = mysqli_query($sqlServ, $rank);
+	$guilds = "SELECT * from guild order by level desc limit 5";
+		$guildsquery = mysqli_query($sqlServ, $guilds);
 	$i = 0;
-	
-			while($array = mysqli_fetch_array($query)) {
-				$i = $i + 1;
-				$zF = ($i%2==0) ? "light" : "";
-				
-echo"
-              <tr>
+	while($array = mysqli_fetch_array($guildsquery)) {
+				$i = $i + 1;			
+		echo"<tr>
                 <td><span class=\"badge\">".$i."</span></td>
                 <td><a href=\"index.php?page=guilds\" class=\"first\">".$array["name"]."</a></td>
                 <td>".$array["level"]."</td>
-
-              </tr>
-";
+              </tr>";
 			}
-echo"";
-}							
 ?>	
             </tbody>
           </table>
@@ -131,42 +84,17 @@ echo"";
             </thead>
             <tbody>
 <?php
-echo "";
-		((bool)mysqli_query($sqlServ, "USE player")); // Select DB 'player'
-		
-	$test = "SELECT * from player";
-		$testquery = mysqli_query($sqlServ, $test);
-			$num2 = mysqli_num_rows($testquery);
-
-		if(isset($_GET['max'])) {
-			$get = $_GET['max'];
-		} else {
-		$get = '0';
-		?>
-<?php
-((bool)mysqli_query($sqlServ, "USE player")); // Select DB 'player'
-			
-// Select player etc from db //
-
-
-	$rank = "SELECT * from player WHERE name NOT LIKE '[%]%' order by gold desc limit $get,5";
-		$query = mysqli_query($sqlServ, $rank);
-	$i = 0;
-	
-			while($array = mysqli_fetch_array($query)) {
+	$yangrank = "SELECT * from player order by gold desc limit 5";
+		$yangquery = mysqli_query($sqlServ, $yangrank);
+			$i = 0;
+			while($array = mysqli_fetch_array($yangquery)) {
 				$i = $i + 1;
-				$zF = ($i%2==0) ? "light" : "";
-echo"
-              <tr>
+			echo"<tr>
                 <td><span class=\"badge\">". $i ."</span></td>
 				<td><a href=\"index.php?page=player&char=".$array["name"]."\"><img src=\"images/chars/misc/".$array["job"].".png\" height=\"30\" width=\"30\"></a></td>
                 <td><a href=\"index.php?page=player&char=".$array["name"]."\">".$array["name"]."</a></td>
-
-              </tr>
-";
-			}
-}							
-?>	
+					</tr>";
+			}?>	
 
             </tbody>
           </table>

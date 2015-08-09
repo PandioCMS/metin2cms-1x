@@ -57,6 +57,9 @@ error_reporting(0);
 			case 'chat':
 				require 'main/chat.php';
 				break;
+			case 'donate':
+				require 'main/donate.php';
+				break;
 			default:
 				require 'main/home.php';
 				break;

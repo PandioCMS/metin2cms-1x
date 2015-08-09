@@ -23,6 +23,10 @@
             <a href="index.php?page=admin&a=presentation" class="list-group-item">
               <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-asterisk"></span> Prezentarea generală a serverului</h4>
               <p class="list-group-item-text">Crează o pagina de prezentare a serverului.</p>
+            </a>
+            <a href="index.php?page=admin&a=donate" class="list-group-item">
+              <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-euro"></span> Pagina de donații</h4>
+              <p class="list-group-item-text">Crează o pagina de donații în magazinul de obiecte.</p>
             </a><?php } ?>
             <a href="index.php?page=admin&a=chat" class="list-group-item">
               <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-envelope"></span> Poziție chat</h4>

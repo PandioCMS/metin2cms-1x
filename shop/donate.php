@@ -3,14 +3,9 @@
 	session_start();
 	include("../inc/config.php");
 	include("../inc/functions.php");
-	
+			
 	$sqlHp = new mysqli(SQL_HP_HOST,  SQL_HP_USER,  SQL_HP_PASS);
 	$sqlServ = new mysqli(SQL_HOST,  SQL_USER,  SQL_PASS);
-	
-	if (!isset($_GET['id'])) {
-		die("Trebuie sa alegi un item.");  
-	}
-	$id = intval($_GET['id']);
 	
 if(empty($_SESSION['id'])) {
 header("Location: login.php");
@@ -36,10 +31,10 @@ header("Location: login.php");
 		<link href="css/fancybox.css" rel="stylesheet" type="text/css" />
 		<link href="css/jScrollPane.css" rel="stylesheet" type="text/css" />
 		<link href="css/promoted.css" rel="stylesheet" type="text/css" />
-		<link href="css/pending.css" rel="stylesheet" type="text/css" />
 		<link href="css/usermenu.css" rel="stylesheet" type="text/css" />
 		<link href="css/purchase.css" rel="stylesheet" type="text/css" />
 		<link href="css/wheel.css" rel="stylesheet" type="text/css" />
+
 		<!--[if IE]>
 		<style type="text/css">@import url(http://gf1.geo.gfsrv.net/cdn9a/6ea1bf4927ebc189a9ad0a0e2d7140.css);</style>
 		<style type="text/css">@import url(http://gf1.geo.gfsrv.net/cdn3e/8a0cdb2c5a2e9c5af58e1dcdee50e7.css);</style>
@@ -59,7 +54,6 @@ header("Location: login.php");
 		<script type="text/javascript" src="http://gf2.geo.gfsrv.net/cdn7e/497adc02ec310555ca02b97c5e5b8a.js"></script>
 		<script type="text/javascript" src="http://gf3.geo.gfsrv.net/cdne0/06fa17217edda4ff4898e5e9c27303.js"></script>
 		<script type="text/javascript" src="http://gf1.geo.gfsrv.net/cdn99/ae1c0d191bffe28d878d7ec7062da2.js"></script>
-
 </head>
 <body class="twoColFixLtHdr" scroll="no" ondblclick="return false;">
 	<div id="container">
@@ -71,30 +65,17 @@ header("Location: login.php");
 			<div class="boxCoins">
 				<span class="heading">Monede Dragon (MD):</span>
 				<span class="coinsValue"><?php echo $coins;?></span>
-<?php
-	$query = mysqli_query($sqlHp, 'SELECT * FROM '.SQL_HP_DB.'.settings WHERE id="11" ');
-	$output = mysqli_fetch_assoc($query);
-	if ($output['value'] == "")
-	{ echo '<a href="index.php" class="purchaseButton" title="Acasă">Prima Pagină</a>'; }
-	else { echo '<a href="donate.php" class="purchaseButton" title="Donează">Donează Pentru Monede Dragon</a>';}
-?>
+				<a href="donate.php" class="purchaseButton" title="Acasă">Prima Pagină</a>
 			</div>
 		</div>
-
-		
-			<ul id="breadcrumb">		
-
-			<li><a href="index.php">Acasă</a> » </li>
-<?php 
-	$get_info2 = mysqli_Query($sqlHp, "SELECT * from ".SQL_HP_DB.".ishop_categorii where id=".$_GET['id']."");
-	$info2 = mysqli_fetch_Array($get_info2);
-	echo "<li>".$info2['nume']."<li>"; ?>
 	
-			</ul>
+						<ul id="breadcrumb">
+						<li><a href="index.php">Acasă</a> » </li><li>Donație<li>
+						</ul>
 		<div id="sidebar1">
 		<ul id="mainMenu">
 		<?php
-		$get_categorii = mysqli_query($sqlServ, "SELECT * FROM ".SQL_HP_DB.".ishop_categorii");
+		$get_categorii = mysqli_query($sqlHp, "SELECT * FROM ".SQL_HP_DB.".ishop_categorii");
 		while($categorie = mysqli_fetch_object($get_categorii)) {
           echo '<li><a href="categorie.php?id='.$categorie->id.'" title="'.$categorie->nume.'">'.$categorie->nume.'</a></li>';
 		}
@@ -102,48 +83,16 @@ header("Location: login.php");
 			</ul>		
 			</div>	
 			<div id="mainContent">
-						<h1>Ultimile iteme adăugate</h1>
+						<h1>Detalii despre cum poți face donații</h1>
 			<div class="dynContent" style="position:relative">
-			<?php
-			$get_iteme = mysqli_query($sqlServ, "SELECT * FROM ".SQL_HP_DB.".item_ishop where categorie=" . $id);
-			while($iteme = mysqli_fetch_object($get_iteme)) {
-			?>
-					<div class="item">
-						<div class="itemDesc">
-							<div class="thumbnailBgSmall">
-								<a href="detalii.php?id=<?php echo $iteme->id; ?>" title="Informatii aditionale" class="openinformation">
-									<img src="img/items/<?php echo $iteme->img; ?>.png" onerror="this.src='img/error.png';" width="63px" height="63px" alt="Informatii aditionale"/>
-								</a>
-							</div>
-							<p>
-								<a href="detalii.php?id=<?php echo $iteme->id; ?>" title="Informatii aditionale" class="openinformation">
-									<span class="itemTitle"><?php echo $iteme->nume_item; ?></span>
-								</a>
-								<span class="line"></span>
-								<?php
-								if (empty($iteme->descriere))
-										{
-								?>
-								Acest item nu are descriere.
-								<?php
-								} else { ?>
-								<?php echo $iteme->descriere; ?>
-								<?php
-								}
-								?>
-							</p>
-						</div>
-						<div class="purchaseOptionsWrapper">
-							<div class="itemPrice">
-								<div class="priceValue"><?php echo $iteme->buc; ?> buc doar:<span class="price">&nbsp;<?php echo $iteme->pret; ?> MD</span></div>
-							</div>
-							<a href="detalii.php?id=<?php echo $iteme->id; ?>" title="Informatii aditionale" class="purchaseInfo openinformation">Detalii</a>
-							<br class="clearfloat" />
-						</div>
-					</div>
-			<?php
-			}
-			?>
+<?php
+	$query = mysqli_query($sqlHp, 'SELECT * FROM '.SQL_HP_DB.'.settings WHERE id="11" ');
+	$output = mysqli_fetch_assoc($query);
+	if ($output['value'] == "")
+	{ echo'Momentan nu a fost creată o paginî pentru donații!'; }
+	else {
+	echo $output['value']; }
+?>
 			
 					</div>
 			<div class="endContent"></div>

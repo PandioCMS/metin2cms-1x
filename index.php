@@ -20,7 +20,7 @@
 <?php
 	$adm = isset($_GET['a']) ? sanitize($_GET['a']) : null;
 	if($adm) { 
-	if($_GET['a'] == "news" or $_GET['a'] == "news_edit" or $_GET['a'] == "presentation") { ?>
+	if($_GET['a'] == "news" or $_GET['a'] == "news_edit" or $_GET['a'] == "presentation" or $_GET['a'] == "donate") { ?>
 		<script src="ckeditor/ckeditor.js"></script>
 		<script src="ckeditor/build-config.js"></script>
 <?php

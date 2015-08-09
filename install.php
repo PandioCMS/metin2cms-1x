@@ -248,7 +248,8 @@ function createHpTables() {
 (7, 'Cod Prezentare YouTube', '".$webTemp['youtube']."'),
 (8, 'Inregistrare activa?', '".$webTemp['reg']."'),
 (9, 'Link Forum.', '".$webTemp['forum']."'),
-(10, 'Pozitie chat.', '".$webTemp['chat_location']."');";
+(10, 'Pozitie chat.', '".$webTemp['chat_location']."'),
+(11, 'Pagina de donatii', '');";
  
   foreach($cmdHp AS $blub) {
     echo '<p style="font-size:11px;">'.$blub;

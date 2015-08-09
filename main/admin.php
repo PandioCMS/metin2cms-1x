@@ -105,6 +105,9 @@
 			case 'create_item':
 				require 'user/admin/create_item.php';
 				break;
+			case 'donate':
+				require 'user/admin/donation.php';
+				break;
 			default:
 				require 'user/admin/home.php';
 				break;

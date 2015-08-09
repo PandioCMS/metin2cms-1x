@@ -65,7 +65,14 @@ header("Location: login.php");
 			<div class="boxCoins">
 				<span class="heading">Monede Dragon (MD):</span>
 				<span class="coinsValue"><?php echo $coins;?></span>
-				<a href="index.php" class="purchaseButton" title="Acasă">Prima Pagină</a>
+				
+<?php
+	$query = mysqli_query($sqlHp, 'SELECT * FROM '.SQL_HP_DB.'.settings WHERE id="11" ');
+	$output = mysqli_fetch_assoc($query);
+	if ($output['value'] == "")
+	{ echo '<a href="index.php" class="purchaseButton" title="Acasă">Prima Pagină</a>'; }
+	else { echo '<a href="donate.php" class="purchaseButton" title="Donează">Donează Pentru Monede Dragon</a>';}
+?>
 			</div>
 		</div>
 	

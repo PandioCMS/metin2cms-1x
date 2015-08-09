@@ -9,6 +9,12 @@
         <h1>Administrare - blocarea conturilor pe IP</h1>
       </div>
 <?PHP
+  $banGruende = array(
+    0 => 'Hacking',
+    1 => 'Buguri',
+    2 => 'Insulte',
+    3 => 'Altele'
+  );
     if(isset($_GET['ip']) && !empty($_GET['ip'])) {
       
       if(isset($_POST['submit']) && $_POST['submit']=="Baneaza") {

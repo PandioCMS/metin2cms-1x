@@ -35,6 +35,13 @@
 			?>
 			<li><a href="?page=chat">Chat</a></li>
 			<?php }} ?>
+			<?php
+			$fr = mysqli_query($sqlHp, "SELECT * FROM ".SQL_HP_DB.".settings WHERE id=11");
+			$forum = mysqli_fetch_assoc($fr);
+			if (!empty($forum['value'])) {
+			?>
+			<li><a href="?page=donate">Donează!</a></li>
+			<?php } ?>
 		</ul>
 		<div class="col-sm-3 col-md-3 pull-right">
           <form class="navbar-form" role="search" action="index.php" method="get">

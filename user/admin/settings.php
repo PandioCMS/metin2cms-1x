@@ -22,7 +22,7 @@ function clear($message)
 
 if(!isset($_GET['id']))
 {
-	$query = mysqli_query($sqlHp, "SELECT * FROM ".SQL_HP_DB.".settings ORDER BY id");
+	$query = mysqli_query($sqlHp, "SELECT * FROM ".SQL_HP_DB.".settings ORDER BY id limit 9");
 	echo 'Editează<hr />';
 	echo"<div class=\"alert alert-info\" role=\"alert\">
         Dacă ți se cer linkuri te rog să scrii la început cu <strong>http://</strong> și la sfârșit cu <strong>/</strong> !
