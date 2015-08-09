@@ -1,13 +1,4 @@
 <?php
-function sanitize($var) {
-	$var = htmlentities($var, ENT_QUOTES);
-	$var = htmlspecialchars($var, ENT_QUOTES, 'UTF-8');
-	if(get_magic_quotes_gpc()) {
-		$var = stripslashes($var);
-	}
-	return $var;
-}
-
 if(!function_exists('sanitize')) {
 	function sanitize($var) {
 		$var = htmlentities($var, ENT_QUOTES);
@@ -18,8 +9,6 @@ if(!function_exists('sanitize')) {
 		return $var;
 	}
 }
-
-
 
 function stripInput($text) {
 	if(!is_array($text)) {

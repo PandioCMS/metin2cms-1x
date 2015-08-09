@@ -11,11 +11,12 @@
 <div class="well">
 <?PHP
   
-    if(isset($_POST['submit']) && $_POST['submit']=="Creaza") {
+    if(isset($_POST['submit'])) {
     
       if(checkInt($_POST['aid'])) {
         $sqlCmd = "SELECT COUNT(*) AS checkIn FROM account.account WHERE id='".$_POST['aid']."' LIMIT 1";
-        $getCount = mysqli_fetch_object(mysqli_query($sqlServ, $sqlCmd));
+        $getCount = mysqli_query($sqlServ, $sqlCmd) or die(mysqli_error($sqlServ));
+        $getCount = mysqli_fetch_object($getCount);
         if($getCount->checkIn==1) {
           
             if(!empty($_POST['vnum']) && checkInt($_POST['vnum'])) {
@@ -27,11 +28,19 @@
               }
               $avnum=$_POST['itemtyp']+$_POST['stufe'];
             }
+           
+            $_POST['boniv0'] = (empty($_POST['boniv0'])) ? 0 : $_POST['boniv0'];  
+            $_POST['boniv1'] = (empty($_POST['boniv1'])) ? 0 : $_POST['boniv1'];  
+            $_POST['boniv2'] = (empty($_POST['boniv2'])) ? 0 : $_POST['boniv2'];  
+            $_POST['boniv3'] = (empty($_POST['boniv3'])) ? 0 : $_POST['boniv3'];  
+            $_POST['boniv4'] = (empty($_POST['boniv4'])) ? 0 : $_POST['boniv4'];  
+            $_POST['boniv5'] = (empty($_POST['boniv5'])) ? 0 : $_POST['boniv5'];  
+            $_POST['boniv6'] = (empty($_POST['boniv6'])) ? 0 : $_POST['boniv6'];  
             $sqlCmd="INSERT INTO player.item 
               (owner_id,window,pos,count,vnum,socket0,socket1,socket2,attrtype0,attrvalue0,attrtype1,attrvalue1,attrtype2,attrvalue2,attrtype3,attrvalue3,attrtype4,attrvalue4,attrtype5,attrvalue5,attrtype6,attrvalue6)
               VALUES
               ('".$_POST['aid']."','".$_POST['window']."','".$_POST['position']."','".$_POST['stapelmenge']."','".$avnum."','".$_POST['socket0']."','".$_POST['socket1']."','".$_POST['socket2']."','".$_POST['boni0']."','".$_POST['boniv0']."','".$_POST['boni1']."','".$_POST['boniv1']."','".$_POST['boni2']."','".$_POST['boniv2']."','".$_POST['boni3']."','".$_POST['boniv3']."','".$_POST['boni4']."','".$_POST['boniv4']."','".$_POST['boni5']."','".$_POST['boniv5']."','".$_POST['boni6']."','".$_POST['boniv6']."')";
-            $sqlQry = mysqli_query($sqlServ, $sqlCmd);
+            $sqlQry = mysqli_query($sqlServ, $sqlCmd) or die(mysqli_error($sqlServ));
             if($sqlQry) {
               echo'<p class="meldung">Itemul a fost modat cu succes.</p>';
             }
@@ -245,7 +254,7 @@
   
 	$account = isset($_GET['acc']) ? $_GET['acc'] : '';
 ?>
-<form action="index.php?page=admin&a=create_item" method="POST">
+<form action="" method="POST">
   <font size="1"><table>
     <tr>
       <th class="topLine">ID-ul contului:</th>
@@ -402,7 +411,7 @@
       </td>
     </tr>
     <tr>
-      <th class="topLine" colspan="2" style="text-align:center;"></br><input type="submit" class="btn btn-success" value="Creaza" name="submit"/> &bull; <input type="reset" class="btn btn-warning" value="Reseteaz&#259;"/></th>
+      <th class="topLine" colspan="2" style="text-align:center;"></br><input type="submit" class="btn btn-success" value="Crează" name="submit"/> &bull; <input type="reset" class="btn btn-warning" value="Reseteaz&#259;"/></th>
     </tr>
   </table></font>
 </form>
