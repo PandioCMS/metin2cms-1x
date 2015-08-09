@@ -94,7 +94,7 @@ header("Location: login.php");
 		<div id="sidebar1">
 		<ul id="mainMenu">
 		<?php
-		$get_categorii = mysqli_query($sqlServ, "SELECT * FROM ".SQL_HP_DB.".ishop_categorii");
+		$get_categorii = mysqli_query($sqlHp, "SELECT * FROM ".SQL_HP_DB.".ishop_categorii");
 		while($categorie = mysqli_fetch_object($get_categorii)) {
           echo '<li><a href="categorie.php?id='.$categorie->id.'" title="'.$categorie->nume.'">'.$categorie->nume.'</a></li>';
 		}
@@ -105,7 +105,7 @@ header("Location: login.php");
 						<h1>Ultimile iteme adăugate</h1>
 			<div class="dynContent" style="position:relative">
 			<?php
-			$get_iteme = mysqli_query($sqlServ, "SELECT * FROM ".SQL_HP_DB.".item_ishop where categorie=" . $id);
+			$get_iteme = mysqli_query($sqlHp, "SELECT * FROM ".SQL_HP_DB.".item_ishop where categorie=" . $id);
 			while($iteme = mysqli_fetch_object($get_iteme)) {
 			?>
 					<div class="item">
