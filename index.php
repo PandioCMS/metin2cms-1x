@@ -97,7 +97,7 @@
 		</br></br>
 		<!--FOOTER-->
 	<div class="mt2cms-footer">
-      <p><span class="glyphicon glyphicon-copyright-mark"></span> Copyright <?php echo date('Y');?> <?php include("user/name_sv.php"); ?></p>
+      <p><span class="glyphicon glyphicon-copyright-mark"></span> Copyright <?php echo date('Y');?> <?php include("user/name_sv.php"); ?> <a href="https://www.metin2pserver.info" title="Metin2 PServer"><img src="https://www.metin2pserver.info/mini.png" border="0" alt="Metin2 PServer"></a></p>
       <p>
         Powered by <a href="http://metin2cms.cf/">Metin2CMS</a> V <?php echo $current_version ?>
       </p>
