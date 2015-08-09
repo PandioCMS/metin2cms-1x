@@ -43,7 +43,6 @@ if(isset($_POST['register']) && isset($_POST['agreed'])) {
 			'usermail' => sanitize(stripInput($_POST['usermail'])),
 			'realname' => sanitize(stripInput($_POST['realname'])),
 			'socialid' => sanitize(stripInput($_POST['socialid'])),
-			'__userip' => $_SERVER['REMOTE_ADDR']
 	);
 	$errors = array();
 	
@@ -65,18 +64,17 @@ if(isset($_POST['register']) && isset($_POST['agreed'])) {
 	} else {
 		if(filter_var($actions['usermail'], FILTER_VALIDATE_EMAIL)) {
 			if($_POST['password'] == $_POST['rpassword']) {
-				$query = "INSERT INTO account.account (login, password, real_name, social_id, email, user_ip, create_time, is_user)
-						VALUES (?, PASSWORD(?), ?, ?, ?, ?, NOW(), 1)";
+				$query = "INSERT INTO account.account (login, password, real_name, social_id, email, create_time)
+						VALUES (?, PASSWORD(?), ?, ?, ?, NOW())";
 				$sanitize = array(
 						':user' => $actions['username'],
 						':pass' => $actions['password'],
 						':mail' => $actions['usermail'],
 						':name' => $actions['realname'],
 						':soid' => $actions['socialid'],
-						':usip' => $actions['__userip']
 				);
 				$insert = $sqlServ->prepare($query);
-				$insert->bind_param('ssssss', $sanitize[':user'], $sanitize[':pass'], $sanitize[':name'], $sanitize[':soid'], $sanitize[':mail'], $sanitize[':usip']);
+				$insert->bind_param('sssss', $sanitize[':user'], $sanitize[':pass'], $sanitize[':name'], $sanitize[':soid'], $sanitize[':mail']);
 				$insert->execute();
 				echo '<div class="alert alert-success" role="alert">';
 				echo '	Contul <strong>' . $actions['username'] . '</strong> a fost înregistrat cu succes!';
