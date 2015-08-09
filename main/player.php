@@ -1,6 +1,6 @@
 <?php 
 $char = isset($_GET['char']) ? sanitize($_GET['char']) : null;
-$check = $sqlServ->query("SELECT name FROM player.player WHERE name = '{$char}'");
+$check = $sqlServ->query("SELECT name FROM player.player WHERE name LIKE '{$char}'");
 $checkPlayer = $check->fetch_row();
 $checkCount = $check->num_rows;
 ?>

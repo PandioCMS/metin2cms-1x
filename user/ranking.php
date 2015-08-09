@@ -28,7 +28,7 @@
 	$players = "SELECT * from player";
 		$playersquery = mysqli_query($sqlServ, $players);
 
-	$rank = "SELECT * from player order by level desc limit 5";
+	$rank = "SELECT * from player WHERE name NOT LIKE '[%]%' order by level desc limit 5";
 		$query = mysqli_query($sqlServ, $rank);
 			$i = 0;
 			while($array = mysqli_fetch_array($query)) {
@@ -80,11 +80,12 @@
                 <th>Nr.</th>
                 <th>#</th>
                 <th>Nume</th>
+                <th>Nivel</th>
               </tr>
             </thead>
             <tbody>
 <?php
-	$yangrank = "SELECT * from player order by gold desc limit 5";
+	$yangrank = "SELECT * from player WHERE name NOT LIKE '[%]%' order by gold desc limit 5";
 		$yangquery = mysqli_query($sqlServ, $yangrank);
 			$i = 0;
 			while($array = mysqli_fetch_array($yangquery)) {
@@ -93,6 +94,7 @@
                 <td><span class=\"badge\">". $i ."</span></td>
 				<td><a href=\"index.php?page=player&char=".$array["name"]."\"><img src=\"images/chars/misc/".$array["job"].".png\" height=\"30\" width=\"30\"></a></td>
                 <td><a href=\"index.php?page=player&char=".$array["name"]."\">".$array["name"]."</a></td>
+                <td>".$array["level"]."</td>
 					</tr>";
 			}?>	
 
