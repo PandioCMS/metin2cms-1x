@@ -4,7 +4,12 @@
   if(isset($_GET['a'])) {
   if (isset($_SESSION['user_admin'])) { 
   if($_SESSION['user_admin']>=$adminRights['ban_account']) {
-
+  $banGruende = array(
+    0 => 'Hacking',
+    1 => 'Buguri',
+    2 => 'Insulte',
+    3 => 'Altele'
+  );
    echo '<div class="page-header">
         <h1>Administrare - Blocare conturi</h1>
       </div>';
@@ -85,6 +90,11 @@
       </form>
 <?PHP
 }
+  }
+  else {
+    echo '<div class="alert alert-danger" role="alert">
+        Nu ave&#355;i acces la aceast&#259; zon&#259;!
+      </div>'; }
   }
   else {
     echo '<div class="alert alert-danger" role="alert">

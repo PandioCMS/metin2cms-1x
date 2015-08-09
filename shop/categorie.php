@@ -2,7 +2,6 @@
 	error_reporting(0);
 	session_start();
 	include("../inc/config.php");
-	include("../inc/constants.php");
 	include("../inc/functions.php");
 	
 	$sqlHp = new mysqli(SQL_HP_HOST,  SQL_HP_USER,  SQL_HP_PASS);
@@ -72,7 +71,7 @@ header("Location: login.php");
 			<div class="boxCoins">
 				<span class="heading">Monede Dragon (MD):</span>
 				<span class="coinsValue"><?php echo $coins;?></span>
-				<a href="?p=faq&donate" class="purchaseButton" title="Obtine Monede Dragon">Obtine Monede Dragon</a>
+				<a href="index.php" class="purchaseButton" title="Acasă">Prima Pagină</a>
 			</div>
 		</div>
 

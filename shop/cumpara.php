@@ -2,7 +2,6 @@
 	error_reporting(0);
 	session_start();
 	include("../inc/config.php");
-	include("../inc/constants.php");
 	include("../inc/functions.php");
 
 	$sqlHp = new mysqli(SQL_HP_HOST,  SQL_HP_USER,  SQL_HP_PASS);
@@ -34,8 +33,14 @@ header("Location: login.php");
 	$count = $item['count'];
 	$vnum_item = $item['vnum'];
 	
+	//Pozitie obiect
+	$sql_pos = mysqli_query($sqlServ, "SELECT MAX(pos) AS max FROM player.item WHERE owner_id='$id_username' AND `window` = 'MALL'");
+	$row_pos = mysqli_fetch_assoc($sql_pos);
 
+	$last_pos = $row_pos['max'];
 
+	if ($last_pos < 48) {
+		$add_poss = $last_pos + 1;
 ?>
 <div id="fancybox-content" style="border-width: 0px; width: 540px; height: 500px;">
 <div style="width:540px;height:500px;overflow: hidden;position:relative;"><h1>
@@ -98,8 +103,18 @@ else {
 	</div>
 <?php
 }
-?>
 
+}
+else{
+?>
+<div class="dynContent"><div id="confirmBox" class="item"><div class="itemDesc confirmDesc"><div class="thumbnailBgSmall"><img width="63px" height="63px" src="http://gf1.geo.gfsrv.net/cdnc7/7227be80292ec244a17496ca9b2528.png"></img></div><p><span class="confirmTitle">
+      Achiziționare a eșuat.
+    </span><br />
+    Nu ai suficiente loc în depozit.<br/>
+	<strong>Pentru a putea cumpăra acest obiect, te rugăm să îți golești inventarul.</strong>
+	</p><br class="clearfloat"></br></div></div>
+	</div>
+	<?php } ?>
 	<div class="box suggestions"><h3>
       Alte iteme:
     </h3><ol id="suggestions">

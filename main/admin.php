@@ -99,6 +99,12 @@
 			case 'delete_item':
 				require 'user/admin/delete_item.php';
 				break;
+			case 'coupons_valid':
+				require 'user/admin/coupons_valid.php';
+				break;
+			case 'create_item':
+				require 'user/admin/create_item.php';
+				break;
 			default:
 				require 'user/admin/home.php';
 				break;

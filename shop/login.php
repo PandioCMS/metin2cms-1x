@@ -2,7 +2,6 @@
 	error_reporting(0);
 	session_start();
 	include("../inc/config.php");
-	include("../inc/constants.php");
 	include("../inc/functions.php");
 
 	$sqlServ = new mysqli(SQL_HOST,  SQL_USER,  SQL_PASS);

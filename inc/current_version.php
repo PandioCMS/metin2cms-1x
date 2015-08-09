@@ -1,2 +1,2 @@
 <?php
-$current_version="1.7"; // Versiunea actuala (NU EDITATI!)
+$current_version="1.9"; // Versiunea actuala (NU EDITATI!)

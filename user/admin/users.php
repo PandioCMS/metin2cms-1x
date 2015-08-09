@@ -23,6 +23,7 @@
         echo'<a class="list-group-item" href="index.php?page=admin&a=chars&acc='.$_GET['acc'].'">Profil caractere</a>';
         echo'<a class="list-group-item" href="index.php?page=admin&a=rights&acc='.$_GET['acc'].'">Drepturile utilizatorului</a>';
         echo'<a class="list-group-item" href="index.php?page=admin&a=coins&acc='.$_GET['acc'].'">Schimbare monede</a>';
+        echo'<a class="list-group-item" href="index.php?page=admin&a=create_item&acc='.$_GET['acc'].'">Modare item</a>';
         if($accData->status=='OK') 
         {
           echo'<a class="list-group-item" href="index.php?page=admin&a=ban&acc='.$_GET['acc'].'">Blocare cont</a>';

@@ -88,6 +88,10 @@
             <a href="index.php?page=admin&a=coupons" class="list-group-item">
               <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-plus"></span> Adaugă cupoane</h4>
             </a><?php } ?>
+			<?php if($_SESSION['user_admin']>=$adminRights['coupons_add']) { ?>
+            <a href="index.php?page=admin&a=coupons_valid" class="list-group-item">
+              <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-eye-open"></span> Cupoane nefolosite</h4>
+            </a><?php } ?>
 			<?php if($_SESSION['user_admin']>=$adminRights['coupons_log']) { ?>
             <a href="index.php?page=admin&a=coupons_log" class="list-group-item">
               <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-file"></span> Log cupoane</h4>
@@ -118,6 +122,10 @@
 			<?php if($_SESSION['user_admin']>=$adminRights['multi_coins']) { ?>
             <a href="index.php?page=admin&a=add_coins_multi" class="list-group-item">
               <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-euro"></span> Ad&#259;ugare monede (multi utilizator)</h4>
+            </a><?php } ?>
+			<?php if($_SESSION['user_admin']=9) { ?>
+            <a href="index.php?page=admin&a=create_item" class="list-group-item">
+              <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-fire"></span> Creare item modat</h4>
             </a><?php } ?>
             </div>
           </div>

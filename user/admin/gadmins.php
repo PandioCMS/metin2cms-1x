@@ -4,6 +4,13 @@
   if(isset($_GET['a'])) {
   if (isset($_SESSION['user_admin'])) { 
   if($_SESSION['user_admin']>=$adminRights['game_admins']) {
+  $gmRechte = array(
+    'SGA' => 'IMPLEMENTOR',
+    'GA' => 'HIGH_WIZARD',
+    'GM' => 'GOD',
+    'TGM' => 'LOW_WIZARD',
+    'PLAYER' => 'PLAYER'
+  );
 ?>
 <h2>Administrare - Editare administratorii jocului</h2>
 <div class="well">
