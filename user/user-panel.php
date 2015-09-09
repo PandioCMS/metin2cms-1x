@@ -36,12 +36,12 @@ if(!isset($_SESSION)){session_start();}
 			   
 						<form name="loginForm" id="loginForm" action="index.php?page=login" method="post">
 							<div>
-								<label for="username">Nume de utilizator: *</label>
-								<input AUTOCOMPLETE="off" type="text" class="validate[required,custom[noSpecialCharacters],length[3,16]] form-control -webkit-transition" id="username" name="user" maxlength="16" value=""/>
+								<label for="username">Nume de utilizator:</label>
+								<input type="text" class="form-control -webkit-transition" id="username" name="user" maxlength="30" required/>
 							</div>
 							<div>
-								<label for="password">Parol&#259;: *</label>
-								<input AUTOCOMPLETE="off" type="password" class="validate[required,length[5,16]] form-control -webkit-transition" id="password" name="pw" maxlength="16" value=""/>
+								<label for="password">Parol&#259;:</label>
+								<input type="password" class="form-control -webkit-transition" id="password" name="pw" maxlength="32" required/>
 							</div>
 
 							</br>

@@ -448,84 +448,107 @@ if(isset($_GET['step']) && !empty($_GET['step'])) {
   }
   elseif($_GET['step']==2) {
     
-    echo'<p><b>Configurare - Verificare</b></p>';
-  
-    $checkGS = new mysqli($_POST['sqlserver_game'],  $_POST['sqluser_game'],  $_POST['sqlpass_game']);
+	echo '<div style="text-align:left;" class="page-header">
+			<h1>Configurare - Verificare</h1>
+		</div>';
 	
-if ($checkGS->connect_errno) {
-    echo "Nu mă pot conecta la baza de date a serverului.";
-    echo'</br><a href="javascript: history.go(-1)" class="btn btn-warning" role="button">&#171; &Icirc;napoi</a>';
-}
-    
-    foreach($_POST AS $bla=>$bla2)
-    {
-      $_POST[$bla]=str_replace('"','\"',$_POST[$bla]);
-      $_POST[$bla]=str_replace("'","\'",$_POST[$bla]);
-    }
-  
-    $cfgContent ='<?PHP
-    
-      DEFINE(\'SQL_HOST\', \''.$_POST['sqlserver_game'].'\'); //Server DB joc
-      DEFINE(\'SQL_USER\', \''.$_POST['sqluser_game'].'\'); //Utilizator DB joc
-      DEFINE(\'SQL_PASS\', \''.$_POST['sqlpass_game'].'\'); //Parola DB joc
-      
-      DEFINE(\'SQL_HP_HOST\', \''.$_POST['sqlserver_hp'].'\'); //Server DB CMS
-      DEFINE(\'SQL_HP_USER\', \''.$_POST['sqluser_hp'].'\'); //Utilizator DB CMS
-      DEFINE(\'SQL_HP_PASS\', \''.$_POST['sqlpass_hp'].'\'); //Parola DB CMS
-      DEFINE(\'SQL_HP_DB\', \''.$_POST['sqldb_hp'].'\'); //Nume DB CMS
-      
-      $serverSettings[\'page_entries\']=10; // Intrari pe pagina
+	$errors = 0;
+
+    $checkGS = new mysqli($_POST['sqlserver_game'], $_POST['sqluser_game'], $_POST['sqlpass_game']);
+	
+	if ($checkGS->connect_errno) {
+		$errors++;
+		echo "Nu mă pot conecta la baza de date a serverului.</br>";
+		echo '</br><div class="alert alert-danger" role="alert">
+				<strong>'.$checkGS->connect_error.'</strong>.
+			</div>';
+	}
+	mysqli_close($checkGS);
+	
+    $checkCMS = new mysqli($_POST['sqlserver_hp'], $_POST['sqluser_hp'], $_POST['sqlpass_hp'], $_POST['sqldb_hp']);
+	
+	if ($checkCMS->connect_errno) {
+		$errors++;
+		echo "Nu mă pot conecta la baza de date a CMS-ului.</br>";
+		echo '</br><div class="alert alert-danger" role="alert">
+				<strong>'.$checkCMS->connect_error.'</strong>.
+			</div>';
+	}
+	mysqli_close($checkCMS);
+	
+	if($errors) echo'</br><a href="javascript: history.go(-1)" class="btn btn-warning" role="button">&#171; &Icirc;napoi</a>';
+	else {
+		foreach($_POST AS $bla=>$bla2)
+		{
+		  $_POST[$bla]=str_replace('"','\"',$_POST[$bla]);
+		  $_POST[$bla]=str_replace("'","\'",$_POST[$bla]);
+		}
 	  
-    ?>';
+		$cfgContent ='<?PHP
+		
+		  DEFINE(\'SQL_HOST\', \''.$_POST['sqlserver_game'].'\'); //Server DB joc
+		  DEFINE(\'SQL_USER\', \''.$_POST['sqluser_game'].'\'); //Utilizator DB joc
+		  DEFINE(\'SQL_PASS\', \''.$_POST['sqlpass_game'].'\'); //Parola DB joc
+		  
+		  DEFINE(\'SQL_HP_HOST\', \''.$_POST['sqlserver_hp'].'\'); //Server DB CMS
+		  DEFINE(\'SQL_HP_USER\', \''.$_POST['sqluser_hp'].'\'); //Utilizator DB CMS
+		  DEFINE(\'SQL_HP_PASS\', \''.$_POST['sqlpass_hp'].'\'); //Parola DB CMS
+		  DEFINE(\'SQL_HP_DB\', \''.$_POST['sqldb_hp'].'\'); //Nume DB CMS
+		  
+		  $serverSettings[\'page_entries\']=10; // Intrari pe pagina
+		  
+		?>';
 
-    $cfgFile = fopen('./inc/config.php','w+');
-    
-    $writeCfg = fwrite($cfgFile,$cfgContent);
-  	
-    $cfgTemp ='<?PHP
-   
-      $webTemp[\'titlu\']="'.$_POST['titlu'].'";
-      $webTemp[\'news\']="'.$_POST['news'].'";
-      $webTemp[\'mod_sv\']="'.$_POST['mod_sv'].'";
-      $webTemp[\'download_web\']="'.$_POST['download_web'].'";
-      $webTemp[\'download_torrent\']="'.$_POST['download_torrent'].'";
-      $webTemp[\'facebook\']="'.$_POST['facebook'].'";
-      $webTemp[\'youtube\']="'.$_POST['youtube'].'";
-      $webTemp[\'reg\']="'.$_POST['reg'].'";
-      $webTemp[\'forum\']="'.$_POST['forum'].'";
-      $webTemp[\'chat_location\']="'.$_POST['chat_location'].'";
-            
-    ?>';
-	
-    $cfgFileTemp = fopen('./inc/temp.php','w+');
-    
-    $writeTemp = fwrite($cfgFileTemp,$cfgTemp);
-	
-    $cfgChat ='<?PHP
-  
-	$chat_datafile = "chat.dat";
-	$chat_postlimit = "'.$_POST['postlimit'].'";	// Numarul de mesaje care sa apara
-	$chat_timelimit = "'.$_POST['timelimit'].'";	// Cate secunde se asteapta intre postari?
-	$chat_maxline = "'.$_POST['maxline'].'";	// Numarul maxim de caractere in postari
-	$chat_refresh = "'.$_POST['refresh'].'";		// In cate secunde se reimprospateaza chat-ul?
+		$cfgFile = fopen('./inc/config.php','w+');
+		
+		$writeCfg = fwrite($cfgFile,$cfgContent);
+		
+		$cfgTemp ='<?PHP
+	   
+		  $webTemp[\'titlu\']="'.$_POST['titlu'].'";
+		  $webTemp[\'news\']="'.$_POST['news'].'";
+		  $webTemp[\'mod_sv\']="'.$_POST['mod_sv'].'";
+		  $webTemp[\'download_web\']="'.$_POST['download_web'].'";
+		  $webTemp[\'download_torrent\']="'.$_POST['download_torrent'].'";
+		  $webTemp[\'facebook\']="'.$_POST['facebook'].'";
+		  $webTemp[\'youtube\']="'.$_POST['youtube'].'";
+		  $webTemp[\'reg\']="'.$_POST['reg'].'";
+		  $webTemp[\'forum\']="'.$_POST['forum'].'";
+		  $webTemp[\'chat_location\']="'.$_POST['chat_location'].'";
+				
+		?>';
+		
+		$cfgFileTemp = fopen('./inc/temp.php','w+');
+		
+		$writeTemp = fwrite($cfgFileTemp,$cfgTemp);
+		
+		$cfgChat ='<?PHP
+	  
+		$chat_datafile = "chat.dat";
+		$chat_postlimit = "'.$_POST['postlimit'].'";	// Numarul de mesaje care sa apara
+		$chat_timelimit = "'.$_POST['timelimit'].'";	// Cate secunde se asteapta intre postari?
+		$chat_maxline = "'.$_POST['maxline'].'";	// Numarul maxim de caractere in postari
+		$chat_refresh = "'.$_POST['refresh'].'";		// In cate secunde se reimprospateaza chat-ul?
 
-    ?>';
-	
-    $cfgFileChat = fopen('./chat/chatconfig.php','w+');
-    
-    $writeChat = fwrite($cfgFileChat,$cfgChat);
-	
-    if($writeCfg && $writeTemp && $writeChat)
-    {
-      echo'<p>
-        <b>Configurația a fost scrisă!</b><br>
-        <a href="install.php?step=3" class="btn btn-success">Continuă</a>
-      </p>';
-    }
-  
+		?>';
+		
+		$cfgFileChat = fopen('./chat/chatconfig.php','w+');
+		
+		$writeChat = fwrite($cfgFileChat,$cfgChat);
+		
+		if($writeCfg && $writeTemp && $writeChat)
+		{
+		  echo'<p>
+			<b>Configurația a fost scrisă!</b><br></br>
+			<a href="install.php?step=3" class="btn btn-success">Continuă</a>
+		  </p>';
+		}
+	  }
   }
   elseif($_GET['step']==3) {
-    echo'<p><b>Adăugare tabele</b></p>';
+	echo '<div style="text-align:left;" class="page-header">
+			<h1>Adăugare tabele</h1>
+		</div>';
     require_once('./inc/config.php');
     
     $sqlHp = new mysqli(SQL_HP_HOST,  SQL_HP_USER,  SQL_HP_PASS);
@@ -561,7 +584,8 @@ foreach ($fileArray as $value) {
 }
 else {
 ?>
-  <p><b>Instalare Metin2 CMS!</b></p>
+  <h2><b>Instalare Metin2 CMS!</b></h2></br>
+  
   <p><a id="submitBtn" class="btn btn-success" type="submit" href="install.php?step=1">Începe instalarea!</a>
   </p>
 <?PHP

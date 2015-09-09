@@ -70,12 +70,12 @@ if(empty($_SESSION['id'])){
 						<form name="loginForm" id="loginForm" action="index.php?page=login" method="post">
 							<div>
 								<label for="username">Nume de utilizator: *</label>
-								<input type="text" class="form-control input-lg" name="user" placeholder="Nume" required>
+								<input type="text" class="form-control input-lg" name="user" placeholder="Nume" maxlength="16" required>
 
 							</div>
 							<div>
 								<label for="password">Parol&#259;: *</label>
-								<input type="password" class="form-control input-lg" name="pw" placeholder="Parola" required>
+								<input type="password" class="form-control input-lg" name="pw" placeholder="Parola" maxlength="16" required>
 							</div>
 							<div id="checkerror">
                             <p>Scrie numele &#351;i parola din joc apoi apas&#259; butonul Login pentru a vedea meniurile interne ale siteului!</p>

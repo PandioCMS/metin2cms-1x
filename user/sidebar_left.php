@@ -17,7 +17,7 @@
 			?>
         <hr>
         <div class="panel panel-default">
-         	<div class="panel-heading">Facebook - Fi sociabil!</div>
+         	<div class="panel-heading">Facebook - Fii sociabil!</div>
          	<div class="panel-body">
          	<div class="facebook">
          	    <iframe src="//www.facebook.com/plugins/likebox.php?href=http://facebook.com/<?php echo $facebook['value']; ?>&amp;width=700&amp;height=250&amp;colorscheme=light&amp;show_faces=true&amp;border_color=%23ffffff&amp;stream=false&amp;header=false" style="overflow:hidden; width:700px; height:250px;"></iframe>

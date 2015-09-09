@@ -35,62 +35,68 @@ if(!isset($_POST['register'])) {
 <?php } ?>
 
 <?php
-if(isset($_POST['register']) && isset($_POST['agreed'])) {
-	$actions = array(
-			
-			'username' => sanitize(stripInput($_POST['username'])),
-			'password' => sanitize(stripInput($_POST['password'])),
-			'usermail' => sanitize(stripInput($_POST['usermail'])),
-			'realname' => sanitize(stripInput($_POST['realname'])),
-			'socialid' => sanitize(stripInput($_POST['socialid'])),
-	);
-	$errors = array();
-	
-	$check_login = "SELECT * FROM account.account WHERE login = '{$actions['username']}'";
-	$check_login = $sqlServ->query($check_login);
-	$rows_login = $check_login->num_rows;
+	if(isset($_POST['register']) && !isset($_POST['agreed'])) {
+		echo '<div class="alert alert-danger" role="alert">
+				Trebuie să fii de acord cu regulamentul jocului.
+		</div>';
+	}
 
-	$check_email = "SELECT * FROM account.account WHERE email = '{$actions['usermail']}'";
-	$check_email = $sqlServ->query($check_email);
-	$rows_email = $check_email->num_rows;
-	if($rows_login >= 1) {
-		echo '<div class="alert alert-danger" role="alert">';
-		echo '	Acest cont este deja înregistrat!';
-		echo '</div>';
-	} else if($rows_email >= 1) {
-		echo '<div class="alert alert-danger" role="alert">';
-		echo '	Acest e-mail este folosit deja de un alt cont!';
-		echo '</div>';
-	} else {
-		if(filter_var($actions['usermail'], FILTER_VALIDATE_EMAIL)) {
-			if($_POST['password'] == $_POST['rpassword']) {
-				$query = "INSERT INTO account.account (login, password, real_name, social_id, email, create_time)
-						VALUES (?, PASSWORD(?), ?, ?, ?, NOW())";
-				$sanitize = array(
-						':user' => $actions['username'],
-						':pass' => $actions['password'],
-						':mail' => $actions['usermail'],
-						':name' => $actions['realname'],
-						':soid' => $actions['socialid'],
-				);
-				$insert = $sqlServ->prepare($query);
-				$insert->bind_param('sssss', $sanitize[':user'], $sanitize[':pass'], $sanitize[':name'], $sanitize[':soid'], $sanitize[':mail']);
-				$insert->execute();
-				echo '<div class="alert alert-success" role="alert">';
-				echo '	Contul <strong>' . $actions['username'] . '</strong> a fost înregistrat cu succes!';
-				echo '</div>';
+	if(isset($_POST['register']) && isset($_POST['agreed'])) {
+		
+		$actions = array(
+				'username' => sanitize(stripInput($_POST['username'])),
+				'password' => sanitize(stripInput($_POST['password'])),
+				'usermail' => sanitize(stripInput($_POST['usermail'])),
+				'realname' => sanitize(stripInput($_POST['realname'])),
+				'socialid' => sanitize(stripInput($_POST['socialid'])),
+		);
+		$errors = array();
+		
+		$check_login = "SELECT * FROM account.account WHERE login = '{$actions['username']}'";
+		$check_login = $sqlServ->query($check_login);
+		$rows_login = $check_login->num_rows;
+
+		$check_email = "SELECT * FROM account.account WHERE email = '{$actions['usermail']}'";
+		$check_email = $sqlServ->query($check_email);
+		$rows_email = $check_email->num_rows;
+		if($rows_login >= 1) {
+			echo '<div class="alert alert-danger" role="alert">';
+			echo '	Acest cont este deja înregistrat!';
+			echo '</div>';
+		} else if($rows_email >= 1) {
+			echo '<div class="alert alert-danger" role="alert">';
+			echo '	Acest e-mail este folosit deja de un alt cont!';
+			echo '</div>';
+		} else {
+			if(filter_var($actions['usermail'], FILTER_VALIDATE_EMAIL)) {
+				if($_POST['password'] == $_POST['rpassword']) {
+					$query = "INSERT INTO account.account (login, password, real_name, social_id, email, create_time)
+							VALUES (?, PASSWORD(?), ?, ?, ?, NOW())";
+					$sanitize = array(
+							':user' => $actions['username'],
+							':pass' => $actions['password'],
+							':mail' => $actions['usermail'],
+							':name' => $actions['realname'],
+							':soid' => $actions['socialid'],
+					);
+					$insert = $sqlServ->prepare($query);
+					$insert->bind_param('sssss', $sanitize[':user'], $sanitize[':pass'], $sanitize[':name'], $sanitize[':soid'], $sanitize[':mail']);
+					$insert->execute();
+					echo '<div class="alert alert-success" role="alert">';
+					echo '	Contul <strong>' . $actions['username'] . '</strong> a fost înregistrat cu succes!';
+					echo '</div>';
+				} else {
+					echo '<div class="alert alert-danger" role="alert">';
+					echo '	Parolele nu corespund!';
+					echo '</div>';
+				}
 			} else {
-				echo '<div class="alert alert-danger" role="alert">';
-				echo '	Parolele nu corespund!';
+				echo '<div class="alert alert-success" role="alert">';
+				echo '	Adresa de e-mail este invalidă!';
 				echo '</div>';
 			}
-		} else {
-			echo '<div class="alert alert-success" role="alert">';
-			echo '	Adresa de e-mail este invalidă!';
-			echo '</div>';
 		}
 	}
-}
 ?>
 	<div class="well">
 		<div class="table-responsive">
